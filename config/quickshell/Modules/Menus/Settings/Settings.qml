@@ -57,7 +57,7 @@ FloatingWindow {
                 color: Theme.colBg
                 border.color: Theme.colAccent
                 border.width: Config.data.borderSize
-                Layout.preferredWidth: 200
+                Layout.preferredWidth: 205
                 Layout.fillHeight: true
                 radius: Config.data.rounding
 
@@ -72,8 +72,11 @@ FloatingWindow {
                         clip: true
                         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-                        Column {
-                            width: parent.width
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.topMargin: 10
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
                             spacing: 10
 
                             Repeater {
