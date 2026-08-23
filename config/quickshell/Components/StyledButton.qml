@@ -28,7 +28,6 @@ Item {
         shadowColor: Theme.colAccent
         shadowVerticalOffset: 0
         shadowHorizontalOffset: 0
-        opacity: (root.active || mouseArea.containsMouse) ? 0 : 1
         
         Behavior on shadowBlur { NumberAnimation { duration: 150 } }
         Behavior on opacity { NumberAnimation { duration: 150 } }
@@ -52,7 +51,7 @@ Item {
             StyledText {
                 text: root.icon
                 size: root.textSize
-                color: mouseArea.containsMouse ? Theme.colAccent : Theme.colText
+                color: (root.active || mouseArea.containsMouse) ? Theme.colAccent : Theme.colText
                 visible: root.icon !== ""
                 Behavior on color { ColorAnimation { duration: 150 } }
             }
@@ -60,7 +59,7 @@ Item {
             StyledText {
                 text: root.text
                 size: root.textSize
-                color: mouseArea.containsMouse ? Theme.colAccent : Theme.colText
+                color: (root.active || mouseArea.containsMouse) ? Theme.colAccent : Theme.colText
                 visible: root.text !== ""
                 Behavior on color { ColorAnimation { duration: 150 } }
             }

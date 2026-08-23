@@ -29,7 +29,6 @@ Item {
         shadowColor: Theme.colAccent
         shadowVerticalOffset: 0
         shadowHorizontalOffset: 0
-        opacity: (root.active || mouseArea.containsMouse) ? 1 : 1
         
         Behavior on shadowBlur { NumberAnimation { duration: 150 } }
         Behavior on opacity { NumberAnimation { duration: 150 } }
