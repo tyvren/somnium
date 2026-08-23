@@ -25,6 +25,7 @@ system_utils=(
   plymouth
   pacman-contrib
   upower
+  power-profiles-daemon
   flameshot
   vlc
   vlc-plugins-all
