@@ -48,7 +48,7 @@ FloatingWindow {
 
         RowLayout {
             anchors.centerIn: parent
-            spacing: 5
+            spacing: 10
             width: parent.width - 30
             height: parent.height - 30
 
@@ -57,7 +57,7 @@ FloatingWindow {
                 color: Theme.colBg
                 border.color: Theme.colAccent
                 border.width: Config.data.borderSize
-                Layout.preferredWidth: 205
+                Layout.preferredWidth: 203
                 Layout.fillHeight: true
                 radius: Config.data.rounding
 
