@@ -10,7 +10,7 @@ Item {
     property string icon: ""
     property string text: ""
     property string color: Theme.colBg
-    property string borderColor: Theme.colAccent
+    property string borderColor: Theme.colMuted
     property int textSize: 12
     property int buttonWidth: 180
     property int buttonHeight: 40

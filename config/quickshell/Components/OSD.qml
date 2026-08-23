@@ -22,7 +22,8 @@ Item {
     Rectangle {
         id: osdContainer
         anchors.fill: parent
-        anchors.bottomMargin: Config.data.barLayout === "top" ? 2 : 2
+        anchors.topMargin: 1 
+        anchors.bottomMargin: 1
         radius: Config.data.rounding
         color: Theme.colBg
         border.color: Theme.colAccent

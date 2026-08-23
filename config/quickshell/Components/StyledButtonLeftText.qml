@@ -9,12 +9,17 @@ Item {
     id: root
     property string icon: ""
     property string text: ""
+    property string color: Theme.colBg
+    property string borderColor: Theme.colMuted
+    property int iconSize: 14
     property int textSize: 12
+    property int buttonWidth: 180
+    property int buttonHeight: 40
     property bool active: false
     signal clicked()
 
-    implicitWidth: 180
-    implicitHeight: 40
+    implicitWidth: root.buttonWidth
+    implicitHeight: root.buttonHeight
 
     MultiEffect {
         anchors.fill: buttonBackground
@@ -34,8 +39,8 @@ Item {
         id: buttonBackground
         anchors.fill: parent
         radius: Config.data.rounding 
-        color: Theme.colBg
-        border.color: Theme.colAccent
+        color: root.color
+        border.color: root.borderColor
         border.width: Config.data.borderSize
 
         Behavior on color { ColorAnimation { duration: 150 } }
@@ -51,7 +56,7 @@ Item {
 
             StyledText {
                 text: root.icon
-                size: 14
+                size: root.iconSize
                 color: (root.active || mouseArea.containsMouse) ? Theme.colAccent : Theme.colText
                 visible: root.icon !== ""
                 Layout.preferredWidth: 24 
