@@ -25,7 +25,7 @@ Item {
         anchors.fill: buttonBackground
         source: buttonBackground
         shadowEnabled: true
-        shadowBlur: (root.active || mouseArea.containsMouse) ? 0.8 : 0
+        shadowBlur: (root.active || mouseArea.containsMouse) ? 0.2 : 0
         shadowColor: Theme.colAccent
         shadowVerticalOffset: 0
         shadowHorizontalOffset: 0
