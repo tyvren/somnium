@@ -67,6 +67,7 @@ enable_service "cups"
 enable_service "lm_sensors"
 enable_service "paccache.timer"
 enable_service "hyprpolkitagent"
+enable_service "power-profiles-daemon.service"
 
 log_step "Enabling user services"
 enable_user_service "app-com.mitchellh.ghostty.service"
