@@ -101,11 +101,19 @@ Variants {
                     Workspaces {
                         id: workspacesButtonTop
                         anchors.left: parent.left
-                        anchors.leftMargin: 80
+                        anchors.leftMargin: 60
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
+                    SystemTrayApps {
+                        id: systemTrayAppsTop
+                        anchors.right: parent.right
+                        anchors.rightMargin: batteryBtnTop.visible ? 190 : 130
+                        anchors.verticalCenter: parent.verticalCenter 
+                    }
+
                     BatteryBtn {
+                        id: batteryBtnTop
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 130
@@ -219,11 +227,19 @@ Variants {
                     Workspaces {
                         id: workspacesButtonBottom
                         anchors.left: parent.left
-                        anchors.leftMargin: 80
+                        anchors.leftMargin: 60
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    SystemTrayApps {
+                        id: systemTrayAppsBottom
+                        anchors.right: parent.right
+                        anchors.rightMargin: batteryBtnBottom.visible ? 190 : 130
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     BatteryBtn {
+                        id: batteryBtnBottom
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 130
