@@ -27,6 +27,7 @@ system_utils=(
   upower
   power-profiles-daemon
   flameshot
+  grim
   vlc
   vlc-plugins-all
   fwupd
