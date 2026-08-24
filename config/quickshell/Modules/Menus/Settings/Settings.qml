@@ -144,7 +144,7 @@ FloatingWindow {
                         AudioSettings {}
                         BluetoothSettings {}
                         DisplaySettings {
-                            active: settingsMenu.visible && settingsMenu.activeIndex === 6
+                            active: settingsMenu.visible && settingsMenu.activeIndex === 5
                         }
                         Keybinds {}  
                         NetworkSettings {}
