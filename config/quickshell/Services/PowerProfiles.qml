@@ -7,23 +7,20 @@ import Quickshell.Services.UPower
 Singleton {
     id: root
 
-    readonly property bool available: UPower.powerProfilesAvailable ?? false
+    property int currentProfile: PowerProfiles.profile
+    readonly property bool hasPerformanceProfile: PowerProfiles.hasPerformanceProfile ?? false
 
-    property int profile: UPower.powerProfile ?? PowerProfile.Balanced
-    readonly property bool hasPerformanceProfile: UPower.hasPerformanceProfile ?? false
+    function setPowerSaver() {
+        PowerProfiles.profile = PowerProfile.PowerSaver;
+    }
 
-    function cycleProfile() {
-        if (!available) return;
+    function setBalanced() {
+        PowerProfiles.profile = PowerProfile.Balanced;
+    }
 
+    function setPerformance() {
         if (hasPerformanceProfile) {
-                switch(profile) {
-                        case PowerProfile.PowerSaver: profile = PowerProfile.Balanced; break;
-                        case PowerProfile.Balanced: profile = PowerProfile.Performance; break;
-                        case PowerProfile.Performance: profile = PowerProfile.PowerSaver; break;
-                }
-        } else {
-                profile = profile === PowerProfile.Balanced ? PowerProfile.PowerSaver : PowerProfile.Balanced;
+            PowerProfiles.profile = PowerProfile.Performance;
         }
     }
 }
-
