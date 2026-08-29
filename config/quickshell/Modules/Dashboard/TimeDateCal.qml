@@ -17,17 +17,16 @@ ColumnLayout {
     Clock {
         id: clock
         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-        Layout.topMargin: 6
+        Layout.topMargin: 5
         orientation: "horizontalFull"
         visible: States.timeDateVisible
     }
 
     Rectangle {
         id: container
-        Layout.preferredWidth: 480
+        Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.topMargin: 5
-        radius: Config.data.rounding
         color: "transparent" 
         visible: calendarOpen
 
@@ -54,14 +53,20 @@ ColumnLayout {
                 locale: Qt.locale("en_US")
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                delegate: StyledText {
+                delegate: Rectangle {
                     required property var model
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: model.day
-                    color: model.today ? Theme.colHilight : model.month === grid.month
-                        ? Theme.colAccent : "transparent"
-                }
+                    color: model.month === grid.month ? Theme.colBg : "transparent"
+                    border.color: model.today ? Theme.colAccent : "transparent"
+                    radius: Config.data.rounding
+
+                    StyledText {
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        text: model.day
+                        color: model.today ? Theme.colText : model.month === grid.month ? Theme.colAccent : "transparent"
+                    }
+                }      
             }
         }
     }
