@@ -5,7 +5,7 @@ import Quickshell.Widgets
 import qs.Services
 
 RowLayout {
-    spacing: 10
+    spacing: 15
 
     Repeater {
         model: SystemTray.items

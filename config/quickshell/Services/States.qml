@@ -13,7 +13,7 @@ QtObject {
     property bool mediaPlayerInGracePeriod: false
     property bool networkOpen: false
     property bool notificationOSDOpen: false
-    property bool timeDateVisible: false
+    property bool timeDateVisible: true
     property bool volumeOSDOpen: false
 
     function restoreDefaultState() {
