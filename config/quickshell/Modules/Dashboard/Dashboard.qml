@@ -106,7 +106,7 @@ Variants {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            if (!States.dashboardOpen) {
+                            if (!States.dashboardOpen && States.timeDateVisible) {
                                 States.dashboardOpen = true
                                 focusGrab.active = true
                             }
