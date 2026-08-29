@@ -8,7 +8,6 @@ import Quickshell.Widgets
 import Quickshell.Wayland
 import qs.Components
 import qs.Modules.Menus
-import qs.Modules.OSD
 import qs.Components
 import qs.Themes
 import qs.Services
@@ -62,36 +61,6 @@ Variants {
                 Item {
                     id: barContent
                     anchors.fill: parent
-
-                    MediaPlayer {
-                        id: mediaOSDTop
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-    
-                    BrightnessOSD {
-                        id: brightnessOSD
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
-                    NotificationOSD {
-                        id: notificationOSD
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
-                    TimeDateOSD {
-                        id: timeDate
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
-                    VolumeOSD {
-                        id: volumeOSD
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
 
                     MainMenuBtn {
                         id: mainMenuButtonTop

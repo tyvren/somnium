@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell.Io
 import qs.Components
-import qs.Modules.OSD
 import qs.Themes
 import qs.Services
 
@@ -17,28 +16,22 @@ Item {
             if (Audio.sinkVolume < 0.25) return ""
             if (Audio.sinkVolume < 0.50) return ""
             return ""
+        } 
+
+        Process {
+            id: openAudio
+            command: ["qs", "ipc", "call", "dashboard", "openAudio"]
         }
         
-        onClicked: {
-            let contentParent = audiobutton.parent
-            if (contentParent) {
-                for (let i = 0; i < contentParent.children.length; i++) {
-                    let sibling = contentParent.children[i]
-                    if (sibling.toString().includes("VolumeOSD")) {
-                        sibling.requestShow(4000)
-                        break
-                    }
-                }
-            }
-        }
-
         MouseArea {
             anchors.fill: parent
-            acceptedButtons: Qt.RightButton
-            
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+
             onClicked: (mouse) => {
                 if (mouse.button === Qt.RightButton) {
                     Audio.toggleSinkMute()
+                } else {
+                    openAudio.running = true
                 }
             }
         }

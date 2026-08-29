@@ -6,14 +6,15 @@ QtObject {
     id: windowStates
 
     property bool bluetoothOpen: false
+    property bool brightnessOSDOpen: false
+    property bool dashboardOpen: false
     property bool launcherOpen: false
     property bool mediaPlayerOpen: false
-    property bool networkOpen: false
-    property bool brightnessOSDOpen: false
-    property bool notificationOSDOpen: false
-    property bool timeDateOSDOpen: true
-    property bool volumeOSDOpen: false
     property bool mediaPlayerInGracePeriod: false
+    property bool networkOpen: false
+    property bool notificationOSDOpen: false
+    property bool timeDateVisible: false
+    property bool volumeOSDOpen: false
 
     function restoreDefaultState() {
         bluetoothOpen = false
@@ -22,10 +23,10 @@ QtObject {
 
         if (Players.isPlaying || mediaPlayerInGracePeriod) {
             mediaPlayerOpen = true
-            timeDateOSDOpen = false
+            timeDateVisible = false
         } else {
             mediaPlayerOpen = false
-            timeDateOSDOpen = true
+            timeDateVisible = true
         }
     }
 
@@ -35,9 +36,23 @@ QtObject {
             mediaPlayerOpen = false
             networkOpen = false
             notificationOSDOpen = false
-            timeDateOSDOpen = false
+            timeDateVisible = false
             volumeOSDOpen = false
         } else {
+            restoreDefaultState()
+        }
+      }
+
+    onBrightnessOSDOpenChanged: {
+        if (brightnessOSDOpen) {
+            bluetoothOpen = false
+            launcherOpen = false
+            mediaPlayerOpen = false
+            networkOpen = false
+            notificationOSDOpen = false
+            timeDateVisible = false
+            volumeOSDOpen = false
+        } else if (!notificationOSDOpen) {
             restoreDefaultState()
         }
     }
@@ -48,7 +63,7 @@ QtObject {
             mediaPlayerOpen = false
             networkOpen = false
             notificationOSDOpen = false
-            timeDateOSDOpen = false
+            timeDateVisible = false
             volumeOSDOpen = false
         } else {
             restoreDefaultState()
@@ -61,7 +76,7 @@ QtObject {
             launcherOpen = false
             networkOpen = false
             notificationOSDOpen = false
-            timeDateOSDOpen = false
+            timeDateVisible = false
             volumeOSDOpen = false
         }
     }
@@ -72,7 +87,7 @@ QtObject {
             launcherOpen = false
             mediaPlayerOpen = false
             notificationOSDOpen = false
-            timeDateOSDOpen = false
+            timeDateVisible = false
             volumeOSDOpen = false
         } else {
             restoreDefaultState()
@@ -82,12 +97,13 @@ QtObject {
     onNotificationOSDOpenChanged: {
         if (notificationOSDOpen) {
             bluetoothOpen = false
+            dashboardOpen = false
             launcherOpen = false
             mediaPlayerOpen = false
             networkOpen = false
-            timeDateOSDOpen = false
+            timeDateVisible = false
             volumeOSDOpen = false
-        } else if (!volumeOSDOpen) {
+        } else {
             restoreDefaultState()
         }
     }
@@ -99,22 +115,8 @@ QtObject {
             mediaPlayerOpen = false
             networkOpen = false
             notificationOSDOpen = false
-            timeDateOSDOpen = false
-        } else if (!notificationOSDOpen) {
-            restoreDefaultState()
-        }
-    }
-
-    onBrightnessOSDOpenChanged: {
-        if (brightnessOSDOpen) {
-            bluetoothOpen = false
-            launcherOpen = false
-            mediaPlayerOpen = false
-            networkOpen = false
-            notificationOSDOpen = false
-            timeDateOSDOpen = false
-            volumeOSDOpen = false
-        } else if (!notificationOSDOpen) {
+            timeDateVisible = false
+        } else {
             restoreDefaultState()
         }
     }

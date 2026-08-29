@@ -2,7 +2,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Components
-import qs.Modules.Menus.BarMenu
 import qs.Themes
 
 Item {
@@ -14,13 +13,11 @@ Item {
         id: button
         icon: ""
         
-        onClicked: { bluetoothBarMenuLoader.item.visible = !bluetoothBarMenuLoader.item.visible }
-    }
-      
-    LazyLoader {
-        id: bluetoothBarMenuLoader
-        loading: true
+        Process {
+            id: openBluetooth
+            command: ["qs", "ipc", "call", "dashboard", "openBluetooth"]
+        }
 
-        BluetoothMenu {}
+        onClicked: openBluetooth.running = true
     }
 }

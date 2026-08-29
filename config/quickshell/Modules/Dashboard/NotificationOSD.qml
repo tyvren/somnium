@@ -44,34 +44,29 @@ Item {
         onTriggered: root.shouldShowOsd = false
     }
 
-    OSD {
-        id: osdComponent
+    RowLayout {
         anchors.fill: parent
-        active: root.shouldShowOsd
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
+        spacing: 12
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.leftMargin: 15
-            anchors.rightMargin: 15
-            spacing: 12
+        StyledText {
+            text: root.currentSummary
+            bold: true
+            elide: Text.ElideRight
+            maximumLineCount: 1
+            wrapMode: Text.Wrap
+        }
 
-            StyledText {
-                text: root.currentSummary
-                bold: true
-                elide: Text.ElideRight
-                maximumLineCount: 1
-                wrapMode: Text.Wrap
-            }
-
-            StyledText {
-                text: root.currentBody
-                size: 11
-                elide: Text.ElideRight
-                maximumLineCount: 1
-                wrapMode: Text.Wrap
-                Layout.fillWidth: true
-                visible: text !== ""
-            }
+        StyledText {
+            text: root.currentBody
+            size: 11
+            elide: Text.ElideRight
+            maximumLineCount: 1
+            wrapMode: Text.Wrap
+            Layout.fillWidth: true
+            visible: text !== ""
         }
     }
 }
+

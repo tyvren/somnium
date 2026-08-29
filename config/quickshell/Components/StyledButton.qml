@@ -30,7 +30,6 @@ Item {
         shadowHorizontalOffset: 0
         
         Behavior on shadowBlur { NumberAnimation { duration: 150 } }
-        Behavior on opacity { NumberAnimation { duration: 150 } }
     }
 
     Rectangle {

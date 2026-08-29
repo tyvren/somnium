@@ -1,47 +1,48 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
+import qs.Components
 import qs.Themes
+import qs.Services
 
-PopupWindow {
-    id: calendarRoot
-    implicitWidth: 480
-    implicitHeight: 225
-    color: "transparent"
+ColumnLayout {
+    id: root
+    anchors.fill: parent
+    spacing: 10
+
+    property bool calendarOpen: false
+
+    Clock {
+        id: clock
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+        Layout.topMargin: 6
+        orientation: "horizontalFull"
+        visible: States.timeDateVisible
+    }
 
     Rectangle {
         id: container
-        anchors.fill: parent
-        radius: 20
-        color: Theme.colBg
-        border.color: Theme.colAccent
-        border.width: 2
-        opacity: calendarRoot.visible ? 1.0 : 0.0
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 500
-            }
-        }
+        Layout.preferredWidth: 480
+        Layout.fillHeight: true
+        Layout.topMargin: 5
+        radius: Config.data.rounding
+        color: "transparent" 
+        visible: calendarOpen
 
         GridLayout {
             columns: 1
             anchors.fill: parent
-            anchors.margins: 15
+            anchors.margins: 10
 
             DayOfWeekRow {
                 locale: grid.locale
                 Layout.fillWidth: true
-                delegate: Text {
+                delegate: StyledText {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     text: model.shortName
-                    font.family: Theme.fontFamily
-                    font.pointSize: 16
-                    color: Theme.colAccent
                 }
             }
 
@@ -53,17 +54,16 @@ PopupWindow {
                 locale: Qt.locale("en_US")
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                delegate: Text {
+                delegate: StyledText {
                     required property var model
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     text: model.day
-                    font.family: Theme.fontFamily
-                    font.pointSize: 16
                     color: model.today ? Theme.colHilight : model.month === grid.month
-                            ? Theme.colAccent : "transparent"
+                        ? Theme.colAccent : "transparent"
                 }
             }
         }
     }
 }
+

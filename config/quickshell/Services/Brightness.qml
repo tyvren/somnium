@@ -63,11 +63,5 @@ Singleton {
         function stepDown() {
             root.setBrightness(root.brightness - 0.05)
         }
-
-        function set(val) {
-            let num = parseFloat(val)
-            if (val.endsWith("%")) num = num / 100
-            if (!isNaN(num)) root.setBrightness(num)
-        }
     }
 }

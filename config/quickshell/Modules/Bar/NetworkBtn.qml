@@ -2,7 +2,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Components
-import qs.Modules.Menus.BarMenu
 import qs.Services
 import qs.Themes
 
@@ -25,13 +24,13 @@ Item {
                 return Network.signalIcon(activeNet.signal)
             }
             return "󰤯"
-        }
-        onClicked: { networkBarMenuLoader.item.visible = !networkBarMenuLoader.item.visible }
       }
-    LazyLoader {
-        id: networkBarMenuLoader
-        loading: true
 
-        NetworkMenu {}
+      Process {
+          id: openNetwork
+          command: ["qs", "ipc", "call", "dashboard", "openNetwork"]
+      }
+
+      onClicked: openNetwork.running = true
     }
 }
