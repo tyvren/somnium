@@ -121,7 +121,7 @@ Variants {
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 350
-                                easing.type: Easing.InOutQuad
+                                easing.type: Easing.InOutCubic
                             }
                         }
                     }
@@ -134,7 +134,7 @@ Variants {
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 350
-                                easing.type: Easing.InOutQuad
+                                easing.type: Easing.InOutCubic
                             }
                         }
                     }
@@ -147,7 +147,7 @@ Variants {
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 350
-                                easing.type: Easing.InOutQuad
+                                easing.type: Easing.InOutCubic
                             }
                         }
                     }
@@ -160,7 +160,7 @@ Variants {
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 350
-                                easing.type: Easing.InOutQuad
+                                easing.type: Easing.InOutCubic
                             }
                         }
                     }
@@ -237,8 +237,8 @@ Variants {
                             
                             NumberAnimation {
                                 properties: "height"
-                                duration: 200
-                                easing.type: Easing.OutCubic
+                                duration: 250
+                                easing.type: Easing.InOutCubic
                             }
                         },
                         Transition {
@@ -247,8 +247,8 @@ Variants {
 
                             NumberAnimation {
                                 properties: "height"
-                                duration: 250
-                                easing.type: Easing.InCubic
+                                duration: 350
+                                easing.type: Easing.InOutCubic
                             }
                         }
                     ]
