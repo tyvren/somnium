@@ -74,7 +74,6 @@ Item {
                 color: Theme.colAccent
                 size: 16 
                 Layout.alignment: Qt.AlignVCenter
-                Layout.leftMargin: 5
             }
 
             Item { Layout.fillWidth: true }

@@ -133,7 +133,7 @@ FloatingWindow {
                     StackLayout {
                         parent: contentPane
                         anchors.fill: parent
-                        anchors.margins: 10
+                        anchors.margins: 20
                         currentIndex: settingsMenu.activeIndex
 
                         SystemInfo {

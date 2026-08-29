@@ -188,7 +188,7 @@ PanelWindow {
         Loader {
             id: viewLoader
             anchors.fill: parent
-            anchors.margins: dashboard.currentView === "timeDate" ? 0 : 10
+            anchors.margins: States.dashboardOpen ? 10 : 0
             active: dashboard.currentView != null
 
             sourceComponent: {
