@@ -91,10 +91,11 @@ Item {
                 y: volSlider.topPadding + volSlider.availableHeight / 2 - height / 2
                 implicitWidth: 12
                 implicitHeight: 12
-                radius: 3
+                radius: Config.data.rounding
                 color: volSlider.pressed ? Theme.colAccent : Theme.colBg
                 border.color: Theme.colAccent
                 border.width: 1
+                visible: false
             }
 
             onMoved: {
