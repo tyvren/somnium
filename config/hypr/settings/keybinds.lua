@@ -5,7 +5,7 @@
 -- Set programs that you use
 local terminal = "uwsm app -- ghostty +new-window"
 local fileManager = "uwsm app -- thunar"
-local menu = "uwsm app -- qs ipc call launcher-menu toggle"
+local menu = "uwsm app -- qs ipc call dashboard openLauncher"
 local lockScreen = "uwsm app -- qs ipc call lockscreen lock"
 
 -- Lock and Idle
