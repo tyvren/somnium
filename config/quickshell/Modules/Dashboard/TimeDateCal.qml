@@ -28,7 +28,15 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.topMargin: 5
         color: "transparent" 
-        visible: calendarOpen
+        opacity: calendarOpen ? 1 : 0
+        visible: opacity > 0
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutCubic
+            }
+        }
 
         GridLayout {
             columns: 1
