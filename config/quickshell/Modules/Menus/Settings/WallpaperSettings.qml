@@ -101,8 +101,9 @@ ColumnLayout {
                                 anchors.fill: parent
                                 source: "file://" + currentWallpaper
                                 fillMode: Image.PreserveAspectCrop
+                                sourceSize.width: 960
+                                sourceSize.height: 540
                                 asynchronous: true
-                                smooth: true
                             }
                         }
                     }
@@ -221,8 +222,9 @@ ColumnLayout {
                         anchors.fill: parent
                         source: "file://" + modelData
                         fillMode: Image.PreserveAspectCrop
+                        sourceSize.width: 960
+                        sourceSize.height: 540
                         asynchronous: true
-                        smooth: true
                     }
                 }
 
