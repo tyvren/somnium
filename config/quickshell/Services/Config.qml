@@ -30,6 +30,7 @@ Singleton {
             id: adapter
             property string theme: "somnium"
             property string wallpaper: ""
+            property string wallpaperDir: ""
 
             property string barLayout: "top"
             property int barMargin: 10

@@ -1,5 +1,7 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
@@ -15,7 +17,7 @@ ColumnLayout {
     property bool active: false
     property string currentWallpaper: Config.data.wallpaper
     
-    property string wallpaperDir: Quickshell.env("HOME") + "/Pictures/wallpapers"
+    property string wallpaperDir: Config.data.wallpaperDir.slice(7)
     property var wallpaperList: []
 
     readonly property string folderName: Theme.activeId.charAt(0).toUpperCase() + Theme.activeId.slice(1)
@@ -108,22 +110,36 @@ ColumnLayout {
             }
 
             ColumnLayout {
-                spacing: 5
+                spacing: 10
                 Layout.fillWidth: true
 
                 RowLayout {
                     spacing: 10
                     
                     StyledText { 
-                        text: "Custom Wallpapers"
+                        text: "Wallpapers"
                         color: Theme.colAccent
                         size: 11
                     }
                     
-                    StyledText {
-                        text: "~/Pictures/wallpapers"
-                        color: Theme.colMuted
-                        size: 11
+                    StyledButton {
+                        id: directoryPicker
+                        buttonWidth: 30
+                        buttonHeight: 15
+                        icon: "" 
+                        onClicked: folderDialog.open()
+
+                        FolderDialog {
+                            id: folderDialog
+                            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+                            selectedFolder: folderDialog.selectedFolder
+                            
+                            onSelectedFolderChanged: {
+                                if (folderDialog.selectedFolder != "") {
+                                    Config.data.wallpaperDir = folderDialog.selectedFolder
+                                }
+                            }
+                        }
                     }
                 }
                 DividerLine { Layout.fillWidth: true }

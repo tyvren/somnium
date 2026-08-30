@@ -33,5 +33,6 @@
     "theme": "somnium",
     "toggleFloating": "F",
     "toggleSplit": "J",
-    "wallpaper": ""
+    "wallpaper": "",
+    "wallpaperDir": ""
 }
