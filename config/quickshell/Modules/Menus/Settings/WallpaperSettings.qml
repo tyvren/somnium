@@ -110,7 +110,7 @@ ColumnLayout {
             }
 
             ColumnLayout {
-                spacing: 10
+                spacing: 5
                 Layout.fillWidth: true
 
                 RowLayout {
@@ -125,7 +125,7 @@ ColumnLayout {
                     StyledButton {
                         id: directoryPicker
                         buttonWidth: 30
-                        buttonHeight: 15
+                        buttonHeight: 20
                         icon: "" 
                         onClicked: folderDialog.open()
 
