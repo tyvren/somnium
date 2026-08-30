@@ -20,12 +20,12 @@ RowLayout {
             property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
             property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
 
-            Text {
+            StyledRect {
                 id: icon
-                text: ""
-                color: isActive ? Theme.colAccent : (ws ? Theme.colMuted : "transparent")
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.fontSize
+                implicitWidth: 9
+                implicitHeight: 9
+                color: isActive ? Theme.colBg : (ws ? Theme.colMuted : "transparent")
+                border.color: isActive ? Theme.colAccent : (ws ? Theme.colMuted : "transparent") 
                 layer.enabled: true
                 visible: false
             }
