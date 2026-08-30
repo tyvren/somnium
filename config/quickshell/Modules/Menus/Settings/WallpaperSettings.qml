@@ -137,6 +137,7 @@ ColumnLayout {
                             onSelectedFolderChanged: {
                                 if (folderDialog.selectedFolder != "") {
                                     Config.data.wallpaperDir = folderDialog.selectedFolder
+                                    scanWallpapers.running = true
                                 }
                             }
                         }
