@@ -41,7 +41,7 @@ QtObject {
         } else {
             restoreDefaultState()
         }
-      }
+    }
 
     onBrightnessOSDOpenChanged: {
         if (brightnessOSDOpen) {

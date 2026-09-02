@@ -28,7 +28,10 @@ Variants {
 
                 property int containerWidth: 480
                 property int containerHeight: 400
-                property string currentView: "timeDate"
+                property int closedHeight: 28
+                property int openHeight: 400
+
+                property string currentView: "calendar"
 
                 anchors {
                     top: Config.data.barLayout === "top" 
@@ -44,7 +47,7 @@ Variants {
                     target: States
                     function onDashboardOpenChanged() {
                         if (!States.dashboardOpen) {
-                            dashboard.currentView = "timeDate"
+                            dashboard.currentView = "calendar"
                         }
                     }
                 }
@@ -92,7 +95,7 @@ Variants {
                 Rectangle {
                     id: dashboardBackground
                     width: dashboard.containerWidth
-                    height: dashboard.containerHeight
+                    height: States.dashboardOpen ? dashboard.openHeight : dashboard.closedHeight 
                     y: Config.data.barLayout === "bottom" ? dashboard.containerHeight - height : 0
                     radius: Config.data.rounding
                     color: Theme.colBg
@@ -111,6 +114,22 @@ Variants {
                                 focusGrab.active = true
                             }
                         } 
+                    }
+
+                    Clock {
+                        id: clock
+                        anchors.centerIn: parent
+                        anchors.top: parent
+                        orientation: "horizontalFull"
+                        opacity: States.timeDateVisible && !States.dashboardOpen ? 1 : 0
+                        visible: opacity > 0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 350
+                                easing.type: Easing.InOutCubic
+                            }
+                        }
                     }
 
                     BrightnessOSD {
@@ -165,48 +184,60 @@ Variants {
                         }
                     }
 
-                    Component {
-                        id: timeDateView
-                        TimeDateCal {
-                            id: timedateCal
-                            calendarOpen: States.dashboardOpen && dashboard.currentView === "timeDate"
-                        }
-                    }
-
-                    Component {
-                        id: bluetoothView
-                        BluetoothSettings {}
-                    }
-
-                    Component {
-                        id: launcherView
-                        Launcher {}
-                    }
-
-                    Component {
-                        id: networkView
-                        NetworkSettings {}
-                    }
-
-                    Component {
-                        id: audioView
-                        AudioSettings {}
-                    }
-
-                    Loader {
-                        id: viewLoader
+                    Rectangle {
+                        id: dashHomeScreen
                         anchors.fill: parent
-                        anchors.margins: dashboard.currentView === "timeDate" ? 0 : 10
-                        active: true 
+                        color: "transparent"
+                        opacity: States.dashboardOpen ? 1 : 0
+                        visible: opacity > 0
 
-                        sourceComponent: {
-                            switch (dashboard.currentView) {
-                                case "audio": return audioView
-                                case "bluetooth": return bluetoothView
-                                case "launcher": return launcherView
-                                case "network": return networkView
-                                case "timeDate": return timeDateView
-                                default: return timeDateView
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 500
+                                easing.type: Easing.InOutCubic
+                            }
+                        }
+
+                        Component {
+                            id: calendar
+                            Calendar {}
+                        }
+
+                        Component {
+                            id: bluetoothView
+                            BluetoothSettings {}
+                        }
+
+                        Component {
+                            id: launcherView
+                            Launcher {}
+                        }
+
+                        Component {
+                            id: networkView
+                            NetworkSettings {}
+                        }
+
+                        Component {
+                            id: audioView
+                            AudioSettings {}
+                        }
+
+                        Loader {
+                            id: viewLoader
+                            anchors.fill: parent
+                            anchors.margins: dashboard.currentView === "bluetooth" || dashboard.currentView === "network" ? 10 : 0
+                            active: States.dashboardOpen
+
+                            sourceComponent: {
+                                switch (dashboard.currentView) {
+                                    case "audio": return audioView
+                                    case "bluetooth": return bluetoothView 
+                                    case "calendar": return calendar
+                                    case "launcher": return launcherView
+                                    case "network": return networkView
+                                    default: return timeDateView
+                                }
                             }
                         }
                     }
@@ -218,14 +249,14 @@ Variants {
                             name: "closed"
                             PropertyChanges {
                                 target: dashboardBackground
-                                height: 28 
+                                height: dashboard.closedHeight
                             }
                         },
                         State {
                             name: "open"
                             PropertyChanges {
                                 target: dashboardBackground
-                                height: dashboard.containerHeight
+                                height: dashboard.openHeight
                             }
                         }
                     ]
