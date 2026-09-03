@@ -17,6 +17,7 @@ Variants {
     delegate: Component {
         Item {
             id: root
+            
             required property var modelData
 
             PanelWindow {
@@ -69,11 +70,34 @@ Variants {
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
-                    Workspaces {
-                        id: workspacesButtonTop
+                    QuickMenuBtns {
+                        id: quickMenuButtons
                         anchors.left: parent.left
                         anchors.leftMargin: 60
                         anchors.verticalCenter: parent.verticalCenter
+                        opacity: States.mainMenuOpen ? 1 : 0
+                        visible: opacity > 0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 250
+                                easing.type: Easing.InOutCubic
+                            }
+                        }
+                    }
+
+                    Workspaces {
+                        id: workspacesButtonTop
+                        anchors.left: parent.left
+                        anchors.leftMargin: States.mainMenuOpen ? 160 : 60
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Behavior on anchors.leftMargin {
+                            NumberAnimation {
+                                duration: 250
+                                easing.type: Easing.InOutCubic
+                            }
+                        }
                     }
 
                     SystemTrayApps {

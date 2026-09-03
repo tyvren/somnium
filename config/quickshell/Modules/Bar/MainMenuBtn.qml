@@ -15,28 +15,14 @@ Item {
     BarButton {
         id: mainMenuComponent
         icon: "     "
-        onClicked: { quickMenuLoader.item.visible = !quickMenuLoader.item.visible }
+        onClicked: {
+          if (!States.mainMenuOpen) {
+              States.mainMenuOpen = true
+            } else {
+              States.mainMenuOpen = false
+            }
+          }
         onEntered: spinAnimBottom.start()
-      }
-
-     LazyLoader {
-         id: quickMenuLoader
-         loading: true
-
-         QuickMenu {
-             id: quickMenu
-             anchors {
-                 top: Config.data.barLayout === "top" ? true : false
-                 bottom: Config.data.barLayout === "bottom" ? true : false
-                 left: true
-            }
-
-            margins {
-                 top: Config.data.barLayout === "top" ? 5 : 0
-                 bottom: Config.data.barLayout === "bottom" ? 5 : 0
-                 left: 5
-            }
-        }
     }
 
     RotationAnimation on rotation {

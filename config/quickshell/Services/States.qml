@@ -11,6 +11,7 @@ QtObject {
     property bool launcherOpen: false
     property bool mediaPlayerOpen: false
     property bool mediaPlayerInGracePeriod: false
+    property bool mainMenuOpen: false
     property bool networkOpen: false
     property bool notificationOSDOpen: false
     property bool timeDateVisible: true
