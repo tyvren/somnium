@@ -89,7 +89,7 @@ Variants {
                     Workspaces {
                         id: workspacesButtonTop
                         anchors.left: parent.left
-                        anchors.leftMargin: States.mainMenuOpen ? 160 : 60
+                        anchors.leftMargin: States.mainMenuOpen ? 170 : 60
                         anchors.verticalCenter: parent.verticalCenter
 
                         Behavior on anchors.leftMargin {
