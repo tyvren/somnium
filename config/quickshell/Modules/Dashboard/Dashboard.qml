@@ -96,7 +96,6 @@ Variants {
                 Rectangle {
                     id: dashboardBackground
                     width: dashboard.containerWidth
-                    height: States.dashboardOpen ? dashboard.openHeight : dashboard.closedHeight 
                     y: Config.data.barLayout === "bottom" ? dashboard.containerHeight - height : 0
                     radius: Config.data.rounding
                     color: Theme.colBg
@@ -111,6 +110,7 @@ Variants {
                         hoverEnabled: true
                         onClicked: {
                             if (!States.dashboardOpen) {
+                                dashboard.currentView === "home"
                                 States.dashboardOpen = true
                                 focusGrab.active = true
                             }
@@ -146,7 +146,7 @@ Variants {
                         }
                     }
 
-                    MediaPlayer {
+                    MediaOSD {
                         id: mediaOSD
                         opacity: !States.dashboardOpen && States.mediaPlayerOpen ? 1 : 0
                         visible: opacity > 0
@@ -244,14 +244,6 @@ Variants {
                             }
                         }
 
-                        onVisibleChanged: {
-                          if (States.dashboardOpen && dashboard.currentView === "home") {
-                              dashboard.openHeight = 300
-                          } else {
-                              dashboard.openHeight = 400 
-                            }
-                          }
-
                         ColumnLayout {
                             id: homeScreenColumn
                             anchors.fill: parent
@@ -300,12 +292,12 @@ Variants {
                                 }
                             }
 
-                            Rectangle {
+                            StyledRect {
                                 id: menuWindow
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                                 Layout.bottomMargin: 10
                                 Layout.preferredWidth: 400
-                                Layout.preferredHeight: 260
+                                Layout.preferredHeight: 220
                                 color: "transparent"
                                 
                                 Calendar {

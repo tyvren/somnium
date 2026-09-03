@@ -13,11 +13,11 @@ Item {
     implicitWidth: 480
     implicitHeight: 28
 
-    property int btnTextSize: 14
-    property int artistTextSize: 12
-    property int titleTextSize: 12
-    property int albumWidth: 80
-    property int albumHeight: 80
+    property int btnTextSize: 10
+    property int artistTextSize: 10
+    property int titleTextSize: 10
+    property int albumWidth: 20
+    property int albumHeight: 20
 
     Timer {
         id: pauseTimer
@@ -75,14 +75,17 @@ Item {
         }
     }
 
-    ColumnLayout {
+    RowLayout {
         anchors.fill: parent
+        anchors.leftMargin: 10
+        anchors.rightMargin: 15
+        spacing: 10
 
         Item {
             id: albumArt
             width: root.albumWidth
             height: root.albumHeight
-            Layout.alignment: Qt.AlignHCenter
+            Layout.alignment: Qt.AlignVCenter
 
             ClippingRectangle {
                 anchors.fill: parent
@@ -107,8 +110,7 @@ Item {
 
         RowLayout {
             id: playerControls
-            Layout.alignment: Qt.AlignHCenter
-            spacing: 15
+            spacing: 5
 
             StyledButton {
                 id: prevText
@@ -161,7 +163,7 @@ Item {
 
         StyledText {
             id: artistText
-            Layout.alignment: Qt.AlignHCenter
+            Layout.alignment: Qt.AlignVCenter
             color: Theme.colAccent
             size: root.artistTextSize
             text: Players.active ? (Players.active.trackArtist) : ""
@@ -170,7 +172,8 @@ Item {
 
         StyledText {
             id: titleText
-            Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
             color: Theme.colAccent
             size: root.titleTextSize
             bold: true

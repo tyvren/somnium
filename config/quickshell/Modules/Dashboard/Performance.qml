@@ -68,7 +68,9 @@ ColumnLayout {
 
     RowLayout {
         id: statsRow
-        anchors.fill: parent
+        Layout.alignment: Qt.AlignHCenter
+        Layout.fillWidth: true
+        spacing: 10
 
         Rectangle {
             id: cpuBadge
@@ -86,7 +88,7 @@ ColumnLayout {
                 StyledText {
                     text: ""
                     color: Theme.colAccent
-                    size: 20
+                    size: 16
                     Layout.alignment: Qt.AlignHCenter 
                 }
 
@@ -94,7 +96,7 @@ ColumnLayout {
                     text: Math.round(SysMonitor.cpuUsage) + "%"
                     color: Theme.colAccent
                     bold: true
-                    size: 20
+                    size: 16
                     Layout.alignment: Qt.AlignHCenter 
                 }
             }
@@ -134,7 +136,7 @@ ColumnLayout {
                 StyledText {
                     text: ""
                     color: Theme.colAccent
-                    size: 20
+                    size: 16
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -142,7 +144,7 @@ ColumnLayout {
                     text: Math.round(SysMonitor.ramUsage * 100) + "%"
                     color: Theme.colAccent
                     bold: true
-                    size: 20
+                    size: 16
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

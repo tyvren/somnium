@@ -159,62 +159,6 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 5
-
-                StyledButton {
-                    id: powerSave
-                    Layout.preferredHeight: 45
-                    Layout.fillWidth: true
-                    visible: true
-                    icon: "󰌪"
-                    text: "Power Saving"
-                    textSize: 8
-
-                    Process { id: powerSaveNotification; command: ["notify-send", "Power Save Mode Enabled"] }
-
-                    onClicked: {
-                        PowerProfiles.setPowerSaver();
-                        powerSaveNotification.startDetached(); 
-                    }
-                  } 
-
-                StyledButton {
-                    id: balanced
-                    Layout.preferredHeight: 45
-                    Layout.fillWidth: true
-                    visible: true 
-                    icon: "󰗑"
-                    text: "Balanced"
-                    textSize: 8
-
-                    Process { id: balancedNotification; command: ["notify-send", "Balanced Mode Enabled"] }
-
-                    onClicked: {
-                        PowerProfiles.setBalanced();
-                        balancedNotification.startDetached(); 
-                    }
-                  }
-
-                StyledButton {
-                    id: performance
-                    Layout.preferredHeight: 45
-                    Layout.fillWidth: true
-                    visible: true
-                    icon: "󰊚"
-                    text: "Performance"
-                    textSize: 8
-
-                    Process { id: performanceNotification; command: ["notify-send", "Performance Mode Enabled"] }
-
-                    onClicked: {
-                        PowerProfiles.setPerformance();
-                        performanceNotification.startDetached(); 
-                    }
-                }
-            }
-
-            RowLayout {
-                Layout.fillWidth: true
 
                 StyledText {
                     text: "Notifications"
