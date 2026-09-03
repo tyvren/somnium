@@ -305,12 +305,26 @@ Variants {
                                     id: calendar
                                     anchors.centerIn: parent
                                     visible: false
-                                  }
+
+                                    onVisibleChanged:
+                                        if (calendar.visible) {
+                                            calendarBtn.active = true
+                                        } else {
+                                            calendarBtn.active = false
+                                        }
+                                }
 
                                 Performance {
                                     id: performance
                                     anchors.centerIn: parent
                                     visible: true
+
+                                    onVisibleChanged:
+                                        if (performance.visible) {
+                                            systemStatsBtn.active = true
+                                        } else {
+                                            systemStatsBtn.active = false
+                                        }
                                 }
 
                                 MediaPlayer {
@@ -319,6 +333,13 @@ Variants {
                                     width: 400
                                     height: 220
                                     visible: false
+
+                                    onVisibleChanged:
+                                        if (dashboardMedia.visible) {
+                                            mediaBtn.active = true
+                                        } else {
+                                            mediaBtn.active = false
+                                        }
                                 }
                             }
                         }
