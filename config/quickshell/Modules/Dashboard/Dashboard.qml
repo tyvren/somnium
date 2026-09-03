@@ -56,6 +56,7 @@ Variants {
                 HyprlandFocusGrab {
                     id: focusGrab
                     windows: [dashboard]
+                    active: States.dashboardOpen
                     onCleared: {
                         States.dashboardOpen = false
                     }
@@ -110,7 +111,7 @@ Variants {
                         hoverEnabled: true
                         onClicked: {
                             if (!States.dashboardOpen) {
-                                dashboard.currentView === "home"
+                                dashboard.currentView = "home"
                                 States.dashboardOpen = true
                                 focusGrab.active = true
                             }
