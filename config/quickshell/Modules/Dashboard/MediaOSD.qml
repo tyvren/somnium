@@ -81,6 +81,14 @@ Item {
         anchors.rightMargin: 15
         spacing: 10
 
+        Clock {
+            id: mediaClock
+            orientation: "horizontal"
+            textSize: 12
+            Layout.leftMargin: 20
+            Layout.rightMargin: 20
+        }
+
         Item {
             id: albumArt
             width: root.albumWidth
