@@ -28,10 +28,11 @@ Variants {
 
                 property int containerWidth: 480
                 property int containerHeight: 400
+                property int compactHeight: 300
                 property int closedHeight: 28
                 property int openHeight: 400
 
-                property string currentView: "calendar"
+                property string currentView: "home"
 
                 anchors {
                     top: Config.data.barLayout === "top" 
@@ -47,7 +48,7 @@ Variants {
                     target: States
                     function onDashboardOpenChanged() {
                         if (!States.dashboardOpen) {
-                            dashboard.currentView = "calendar"
+                            dashboard.currentView = "home"
                         }
                     }
                 }
@@ -109,7 +110,7 @@ Variants {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            if (!States.dashboardOpen && States.timeDateVisible) {
+                            if (!States.dashboardOpen) {
                                 States.dashboardOpen = true
                                 focusGrab.active = true
                             }
@@ -146,7 +147,7 @@ Variants {
                     }
 
                     MediaPlayer {
-                        id: media
+                        id: mediaOSD
                         opacity: !States.dashboardOpen && States.mediaPlayerOpen ? 1 : 0
                         visible: opacity > 0
 
@@ -184,11 +185,56 @@ Variants {
                         }
                     }
 
+                    Component {
+                        id: bluetoothView
+                        BluetoothSettings {}
+                    }
+
+                    Component {
+                        id: launcherView
+                        Launcher {}
+                    }
+
+                    Component {
+                        id: networkView
+                        NetworkSettings {}
+                    }
+
+                    Component {
+                        id: audioView
+                        AudioSettings {}
+                    }
+
+                    Loader {
+                        id: viewLoader
+                        anchors.fill: parent
+                        anchors.margins: dashboard.currentView === "bluetooth" || dashboard.currentView === "network" || dashboard.currentView === "audio" ? 10 : 0
+                        active: States.dashboardOpen
+                        opacity: States.dashboardOpen ? 1 : 0
+                        visible: opacity > 0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 350
+                                easing.type: Easing.InOutCubic
+                            }
+                        }
+
+                        sourceComponent: {
+                            switch (dashboard.currentView) {
+                                case "audio": return audioView
+                                case "bluetooth": return bluetoothView
+                                case "launcher": return launcherView
+                                case "network": return networkView
+                            }
+                        }
+                    }  
+
                     Rectangle {
                         id: dashHomeScreen
                         anchors.fill: parent
                         color: "transparent"
-                        opacity: States.dashboardOpen ? 1 : 0
+                        opacity: States.dashboardOpen && dashboard.currentView === "home" ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -198,51 +244,98 @@ Variants {
                             }
                         }
 
-                        Component {
-                            id: calendar
-                            Calendar {}
-                        }
+                        onVisibleChanged: {
+                          if (States.dashboardOpen && dashboard.currentView === "home") {
+                              dashboard.openHeight = 300
+                          } else {
+                              dashboard.openHeight = 400 
+                            }
+                          }
 
-                        Component {
-                            id: bluetoothView
-                            BluetoothSettings {}
-                        }
-
-                        Component {
-                            id: launcherView
-                            Launcher {}
-                        }
-
-                        Component {
-                            id: networkView
-                            NetworkSettings {}
-                        }
-
-                        Component {
-                            id: audioView
-                            AudioSettings {}
-                        }
-
-                        Loader {
-                            id: viewLoader
+                        ColumnLayout {
+                            id: homeScreenColumn
                             anchors.fill: parent
-                            anchors.margins: dashboard.currentView === "bluetooth" || dashboard.currentView === "network" ? 10 : 0
-                            active: States.dashboardOpen
+                            visible: States.dashboardOpen
 
-                            sourceComponent: {
-                                switch (dashboard.currentView) {
-                                    case "audio": return audioView
-                                    case "bluetooth": return bluetoothView 
-                                    case "calendar": return calendar
-                                    case "launcher": return launcherView
-                                    case "network": return networkView
-                                    default: return timeDateView
+                            RowLayout {
+                                id: buttonRow
+                                Layout.alignment: Qt.AlignHCenter
+                                Layout.topMargin: 10
+                                spacing: 10
+                                
+                                StyledButton {
+                                    id: calendarBtn
+                                    icon: ""
+                                    buttonWidth: 50
+                                    buttonHeight: 35
+                                    onClicked: {
+                                        calendar.visible = true
+                                        performance.visible = false
+                                        dashboardMedia.visible = false
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: systemStatsBtn
+                                    icon: "󰊚"
+                                    buttonWidth: 50
+                                    buttonHeight: 35
+                                    onClicked: { 
+                                        performance.visible = true
+                                        calendar.visible = false
+                                        dashboardMedia.visible = false
+                                    }      
+                                }
+
+                                StyledButton {
+                                    id: mediaBtn
+                                    icon: "󰝚"
+                                    buttonWidth: 50
+                                    buttonHeight: 35
+                                    onClicked: { 
+                                        dashboardMedia.visible = true
+                                        calendar.visible = false
+                                        performance.visible = false
+                                    }     
+                                }
+                            }
+
+                            Rectangle {
+                                id: menuWindow
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                                Layout.bottomMargin: 10
+                                Layout.preferredWidth: 400
+                                Layout.preferredHeight: 260
+                                color: "transparent"
+                                
+                                Calendar {
+                                    id: calendar
+                                    anchors.centerIn: parent
+                                    visible: false
+                                  }
+
+                                Performance {
+                                    id: performance
+                                    anchors.centerIn: parent
+                                    visible: true
+                                }
+
+                                MediaPlayer {
+                                    id: dashboardMedia
+                                    anchors.centerIn: parent
+                                    width: 400
+                                    height: 220
+                                    visible: false
                                 }
                             }
                         }
                     }
 
-                    state: States.dashboardOpen ? "open" : "closed"
+                    state: {
+                        if (!States.dashboardOpen) return "closed"
+                        if (dashboard.currentView === "home") return "compact"
+                        return "open"
+                    }
 
                     states: [
                         State {
@@ -250,6 +343,13 @@ Variants {
                             PropertyChanges {
                                 target: dashboardBackground
                                 height: dashboard.closedHeight
+                            }
+                          },
+                        State {
+                            name: "compact"
+                            PropertyChanges {
+                                target: dashboardBackground
+                                height: dashboard.compactHeight
                             }
                         },
                         State {
@@ -263,22 +363,12 @@ Variants {
 
                     transitions: [
                         Transition {
-                            from: "closed"
-                            to: "open"
+                            from: "*"
+                            to: "*"
                             
                             NumberAnimation {
                                 properties: "height"
                                 duration: 250
-                                easing.type: Easing.InOutCubic
-                            }
-                        },
-                        Transition {
-                            from: "open"
-                            to: "closed"
-
-                            NumberAnimation {
-                                properties: "height"
-                                duration: 350
                                 easing.type: Easing.InOutCubic
                             }
                         }
