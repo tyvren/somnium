@@ -9,10 +9,10 @@
 **Features**
 
 - A fully configured hyprland environment built with quickshell
-- AMD or NVidia GPU packages installed automatically during setup
-- Minimal pre-installed packages
+- Customizable shell style and hyprland settings through an intuitive UI
+- AMD or NVidia GPU detection during installation so gaming works out of the box
+- Lightweight due to minimal pre-installed packages, dependencies and resource usage
 - NVIM - preconfigured neovim plugins and themes using lazyvim
-- Theme switching with multiple preinstalled themes
 
 **The full list of pre-installed packages can be found under /core/packages.sh**
 
@@ -28,7 +28,7 @@ Detailed documentation can be found in the wiki.
 
 **Dependencies** 
 - multilib repository, pipewire and network manager must be added during arch install.
-- Secure boot must be disabled in UEFI for systemd bootloader use.
+- Secure boot must be disabled in UEFI. If you'd prefer to use secure boot you will need to follow the Arch wiki to configure it after the setup is complete.
 
 **This script is meant to be used as an automated setup for new arch systems. Clean installs are recommended, as I can not guarantee the functionality when applied to a pre-configured system.**
 
