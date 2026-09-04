@@ -3,7 +3,7 @@
 
 **somnium - a hyprland offering - setup script and full configuration for arch linux**
 -----------------------------------------------------------------------
-<img width="5120" height="2880" alt="2026-08-03_19-49" src="https://github.com/user-attachments/assets/f3c0a7c5-ec02-4795-a987-c4f8cfaa071d" />
+<img width="5118" height="2878" alt="image" src="https://github.com/user-attachments/assets/5d79ca24-6690-47e2-9392-d9ff535c8bb3" />
 
 
 **Features**
