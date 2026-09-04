@@ -17,7 +17,7 @@ Scope {
             PanelWindow {
                 id: dashboard
                 required property var modelData
-                screen: root.modelData
+                screen: modelData
                 focusable: true
                 implicitWidth: dashboard.containerWidth
                 implicitHeight: dashboard.containerHeight 
