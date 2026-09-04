@@ -12,7 +12,7 @@ import qs.Themes
 Variants {
     model: Quickshell.screens
     delegate: Component {
-        Item {
+        Scope {
             id: root
             required property var modelData
 
@@ -24,7 +24,10 @@ Variants {
                 implicitHeight: dashboard.containerHeight 
                 color: "transparent"
                 exclusionMode: ExclusionMode.Ignore
-                mask: Region { item: dashboardBackground }
+                
+                mask: Region { 
+                    item: dashboardBackground 
+                }
 
                 property int containerWidth: 480
                 property int containerHeight: 400
@@ -121,7 +124,6 @@ Variants {
                     Clock {
                         id: clock
                         anchors.centerIn: parent
-                        anchors.top: parent
                         orientation: "horizontalFull"
                         opacity: States.timeDateVisible && !States.dashboardOpen ? 1 : 0
                         visible: opacity > 0
@@ -253,7 +255,7 @@ Variants {
                             RowLayout {
                                 id: buttonRow
                                 Layout.alignment: Qt.AlignHCenter
-                                Layout.topMargin: 10
+                                Layout.topMargin: 15
                                 spacing: 10
                                 
                                 StyledButton {
@@ -296,14 +298,13 @@ Variants {
                             StyledRect {
                                 id: menuWindow
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                                Layout.bottomMargin: 10
+                                Layout.bottomMargin: 15
                                 Layout.preferredWidth: 400
                                 Layout.preferredHeight: 220
                                 color: "transparent"
                                 
                                 Calendar {
                                     id: calendar
-                                    anchors.centerIn: parent
                                     visible: false
 
                                     onVisibleChanged:
@@ -316,7 +317,6 @@ Variants {
 
                                 Performance {
                                     id: performance
-                                    anchors.centerIn: parent
                                     visible: true
 
                                     onVisibleChanged:
@@ -329,7 +329,6 @@ Variants {
 
                                 MediaPlayer {
                                     id: dashboardMedia
-                                    anchors.centerIn: parent
                                     width: 400
                                     height: 220
                                     visible: false

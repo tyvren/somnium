@@ -10,20 +10,18 @@ import qs.Services
 ColumnLayout {
     id: root
     anchors.fill: parent
-    anchors.margins: 5
-    spacing: 10
+    spacing: 5
 
     Rectangle {
         id: container
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.topMargin: 5
         color: "transparent" 
 
-        GridLayout {
-            columns: 1
+        ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 10
+            anchors.leftMargin: 5
+            anchors.rightMargin: 5
 
             DayOfWeekRow {
                 locale: grid.locale
