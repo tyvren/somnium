@@ -18,12 +18,15 @@ Scope {
                 id: dashboard
                 required property var modelData
                 screen: modelData
+
+                property bool isFocusedMonitor: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
+
                 focusable: true
                 implicitWidth: dashboard.containerWidth
                 implicitHeight: dashboard.containerHeight 
                 color: "transparent"
                 exclusionMode: ExclusionMode.Ignore
-                
+
                 mask: Region { 
                     item: dashboardBackground 
                 }
@@ -49,14 +52,14 @@ Scope {
                 HyprlandFocusGrab {
                     id: focusGrab
                     windows: [dashboard]
-                    active: States.dashboardOpen
+                    active: States.dashboardOpen && dashboard.isFocusedMonitor
                     onCleared: {
                         States.dashboardOpen = false
                     }
                 }
 
                 onCurrentViewChanged: {
-                    if (States.dashboardOpen) {
+                    if (States.dashboardOpen && dashboard.isFocusedMonitor) {
                         focusGrab.active = true
                     } else {
                         focusGrab.active = false
@@ -67,21 +70,25 @@ Scope {
                     target: "dashboard"
 
                     function openAudio(): void {
+                        if (!dashboard.isFocusedMonitor) return
                         States.dashboardOpen = true
                         dashboard.currentView = "audio"
                     }
 
                     function openBluetooth(): void {
+                        if (!dashboard.isFocusedMonitor) return
                         States.dashboardOpen = true
                         dashboard.currentView = "bluetooth"
                     }
 
                     function openLauncher(): void {
+                        if (!dashboard.isFocusedMonitor) return
                         States.dashboardOpen = true
                         dashboard.currentView = "launcher"
                     }
 
                     function openNetwork(): void {
+                        if (!dashboard.isFocusedMonitor) return
                         States.dashboardOpen = true
                         dashboard.currentView = "network"
                     }
@@ -94,7 +101,7 @@ Scope {
                     radius: Config.data.rounding
                     color: Theme.colBg
                     border.color: Theme.colAccent
-                    border.width: Config.data.borderSize
+                    border.width: Config.data.borderSize  
 
                     Keys.onEscapePressed: States.dashboardOpen = false
 
@@ -103,7 +110,7 @@ Scope {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            if (!States.dashboardOpen) {
+                            if (!States.dashboardOpen && dashboard.isFocusedMonitor) {
                                 dashboard.currentView = "home"
                                 States.dashboardOpen = true
                                 focusGrab.active = true
@@ -115,7 +122,7 @@ Scope {
                         id: clock
                         anchors.centerIn: parent
                         orientation: "horizontalFull"
-                        opacity: States.timeDateVisible && !States.dashboardOpen ? 1 : 0
+                        opacity: States.timeDateVisible && (!States.dashboardOpen || !dashboard.isFocusedMonitor) ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -128,7 +135,7 @@ Scope {
 
                     BrightnessOSD {
                         id: brightnessOSD
-                        opacity: States.brightnessOSDOpen ? 1 : 0
+                        opacity: States.brightnessOSDOpen && dashboard.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -141,7 +148,7 @@ Scope {
 
                     MediaOSD {
                         id: mediaOSD
-                        opacity: !States.dashboardOpen && States.mediaPlayerOpen ? 1 : 0
+                        opacity: (!States.dashboardOpen && States.mediaPlayerOpen) && dashboard.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -151,10 +158,10 @@ Scope {
                             }
                         }
                     }
-                    
+
                     NotificationOSD {
                         id: notificationOSD
-                        opacity: States.notificationOSDOpen ? 1 : 0
+                        opacity: States.notificationOSDOpen && dashboard.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -167,7 +174,7 @@ Scope {
 
                     VolumeOSD {
                         id: volumeOSD
-                        opacity: States.volumeOSDOpen ? 1 : 0
+                        opacity: States.volumeOSDOpen && dashboard.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -202,8 +209,8 @@ Scope {
                         id: viewLoader
                         anchors.fill: parent
                         anchors.margins: dashboard.currentView === "bluetooth" || dashboard.currentView === "network" || dashboard.currentView === "audio" ? 10 : 0
-                        active: States.dashboardOpen
-                        opacity: States.dashboardOpen ? 1 : 0
+                        active: States.dashboardOpen && dashboard.isFocusedMonitor
+                        opacity: active ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -227,7 +234,7 @@ Scope {
                         id: dashHomeScreen
                         anchors.fill: parent
                         color: "transparent"
-                        opacity: States.dashboardOpen && dashboard.currentView === "home" ? 1 : 0
+                        opacity: States.dashboardOpen && dashboard.currentView === "home" && dashboard.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -240,14 +247,14 @@ Scope {
                         ColumnLayout {
                             id: homeScreenColumn
                             anchors.fill: parent
-                            visible: States.dashboardOpen
+                            visible: States.dashboardOpen && dashboard.isFocusedMonitor
 
                             RowLayout {
                                 id: buttonRow
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.topMargin: 15
                                 spacing: 10
-                                
+
                                 StyledButton {
                                     id: calendarBtn
                                     icon: ""
@@ -292,7 +299,7 @@ Scope {
                                 Layout.preferredWidth: 400
                                 Layout.preferredHeight: 220
                                 color: "transparent"
-                                
+
                                 Calendar {
                                     id: calendar
                                     visible: false
@@ -335,7 +342,7 @@ Scope {
                     }
 
                     state: {
-                        if (!States.dashboardOpen) return "closed"
+                        if (!States.dashboardOpen || !dashboard.isFocusedMonitor) return "closed"
                         if (dashboard.currentView === "home") return "compact"
                         return "open"
                     }
@@ -347,7 +354,7 @@ Scope {
                                 target: dashboardBackground
                                 height: dashboard.closedHeight
                             }
-                          },
+                        },
                         State {
                             name: "compact"
                             PropertyChanges {
@@ -368,7 +375,7 @@ Scope {
                         Transition {
                             from: "*"
                             to: "*"
-                            
+
                             NumberAnimation {
                                 properties: "height"
                                 duration: 250
