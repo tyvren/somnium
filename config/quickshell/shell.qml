@@ -13,20 +13,12 @@ ShellRoot {
     Launcher {}
     LockContext {
         id: lockContext
-
-        onLockRequested: lock.locked = true
-		    onUnlocked: lock.locked = false
+        onLockRequested: lockScreen.locked = true
+        onUnlocked: lockScreen.locked = false
     }
-    WlSessionLock {
-        id: lock
-        locked: true
-
-        WlSessionLockSurface {
-            LockScreen {
-                anchors.fill: parent
-                context: lockContext
-            }
-        }
+    LockScreen {
+        id: lockScreen
+        context: lockContext
     }
     Settings {}
     SidePane {}
