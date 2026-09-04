@@ -9,15 +9,14 @@ import qs.Modules.Menus.Settings
 import qs.Services
 import qs.Themes
 
-Variants {
-    model: Quickshell.screens
-    delegate: Component {
-        Scope {
-            id: root
-            required property var modelData
+Scope {
+    Variants {
+        model: Quickshell.screens
 
+        delegate: Component {
             PanelWindow {
                 id: dashboard
+                required property var modelData
                 screen: root.modelData
                 focusable: true
                 implicitWidth: dashboard.containerWidth
@@ -45,15 +44,6 @@ Variants {
                 margins {
                     top: Config.data.barLayout === "top" ? 4 : 0
                     bottom: Config.data.barLayout === "bottom" ? 4 : 0
-                }
-
-                Connections {
-                    target: States
-                    function onDashboardOpenChanged() {
-                        if (!States.dashboardOpen) {
-                            dashboard.currentView = "home"
-                        }
-                    }
                 }
 
                 HyprlandFocusGrab {

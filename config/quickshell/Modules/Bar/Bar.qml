@@ -12,16 +12,14 @@ import qs.Components
 import qs.Themes
 import qs.Services
 
-Variants {
-    model: Quickshell.screens
-    delegate: Component {
-        Item {
-            id: root
-            
-            required property var modelData
-
+Scope {
+    Variants {
+        model: Quickshell.screens
+    
+        delegate: Component {   
             PanelWindow {
                 id: bar
+                required property var modelData
                 screen: modelData
                 color: "transparent"
                 implicitHeight: 32
