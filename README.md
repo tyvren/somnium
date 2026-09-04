@@ -24,6 +24,7 @@
 ----------------------------------------------------------------------
 
 **QuickStart**
+
 Detailed documentation can be found in the wiki.
 
 **Dependencies** 
