@@ -6,21 +6,24 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import qs.Components
 import qs.Modules.Menus
-import qs.Components
 import qs.Themes
 import qs.Services
 
 Scope {
     Variants {
         model: Quickshell.screens
-    
-        delegate: Component {   
+
+        delegate: Component {
             PanelWindow {
                 id: bar
                 required property var modelData
                 screen: modelData
+
+                property bool isFocusedMonitor: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
+
                 color: "transparent"
                 implicitHeight: 32
                 anchors {
@@ -44,7 +47,7 @@ Scope {
                     border.color: Theme.colAccent
                     border.width: Config.data.borderSize 
                 }
-                
+
                 Rectangle {
                     id: rightBar
                     x: bar.width / 2 + 250
@@ -73,7 +76,7 @@ Scope {
                         anchors.left: parent.left
                         anchors.leftMargin: 60
                         anchors.verticalCenter: parent.verticalCenter
-                        opacity: States.mainMenuOpen ? 1 : 0
+                        opacity: States.mainMenuOpen && bar.isFocusedMonitor ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -87,7 +90,7 @@ Scope {
                     Workspaces {
                         id: workspacesButtonTop
                         anchors.left: parent.left
-                        anchors.leftMargin: States.mainMenuOpen ? 170 : 60
+                        anchors.leftMargin: (States.mainMenuOpen && bar.isFocusedMonitor) ? 170 : 60
                         anchors.verticalCenter: parent.verticalCenter
 
                         Behavior on anchors.leftMargin {
@@ -131,9 +134,9 @@ Scope {
                     }
 
                     SidePaneBtn {
-                       anchors.right: parent.right
-                       anchors.verticalCenter: parent.verticalCenter
-                       anchors.rightMargin: 10
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.rightMargin: 10
                     }
                 }
             } 
