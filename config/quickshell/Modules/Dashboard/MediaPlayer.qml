@@ -14,7 +14,7 @@ Item {
     implicitHeight: 28
 
     property int btnTextSize: 20
-    property int artistTextSize: 14
+    property int artistTextSize: 12
     property int titleTextSize: 12
     property int albumWidth: 100
     property int albumHeight: 100
