@@ -13,11 +13,11 @@ Item {
     implicitWidth: 480
     implicitHeight: 28
 
-    property int btnTextSize: 14
-    property int artistTextSize: 12
+    property int btnTextSize: 20
+    property int artistTextSize: 14
     property int titleTextSize: 12
-    property int albumWidth: 80
-    property int albumHeight: 80
+    property int albumWidth: 100
+    property int albumHeight: 100
 
     Timer {
         id: pauseTimer
@@ -77,6 +77,7 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
+        spacing: 0
 
         Item {
             id: albumArt
@@ -108,13 +109,13 @@ Item {
         RowLayout {
             id: playerControls
             Layout.alignment: Qt.AlignHCenter
-            spacing: 15
+            spacing: 20
 
             StyledButton {
                 id: prevText
                 Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 18
-                Layout.preferredHeight: 18
+                Layout.preferredWidth: 20
+                Layout.preferredHeight: 20
                 color: "transparent"
                 borderColor: "transparent" 
                 textSize: root.btnTextSize
@@ -129,8 +130,8 @@ Item {
             StyledButton {
                 id: playText
                 Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 18
-                Layout.preferredHeight: 18
+                Layout.preferredWidth: 20
+                Layout.preferredHeight: 20
                 color: "transparent"
                 borderColor: "transparent" 
                 textSize: root.btnTextSize
@@ -145,8 +146,8 @@ Item {
             StyledButton {
                 id: nextText
                 Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 18
-                Layout.preferredHeight: 18
+                Layout.preferredWidth: 20
+                Layout.preferredHeight: 20
                 color: "transparent"
                 borderColor: "transparent" 
                 textSize: root.btnTextSize
@@ -164,13 +165,15 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             color: Theme.colAccent
             size: root.artistTextSize
-            text: Players.active ? (Players.active.trackArtist) : ""
+            text: Players.active ? (Players.active.trackArtist) : "No media playing"
             elide: Text.ElideRight
         }
 
         StyledText {
             id: titleText
             Layout.alignment: Qt.AlignHCenter
+            Layout.maximumWidth: parent.width
+            Layout.leftMargin: 5
             color: Theme.colAccent
             size: root.titleTextSize
             bold: true
