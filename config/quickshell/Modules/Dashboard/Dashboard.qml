@@ -276,6 +276,7 @@ Scope {
                                         calendar.visible = false
                                         controls.visible = false
                                         dashboardMedia.visible = false
+                                        notificationPane.visible = false
                                     }      
                                 }
 
