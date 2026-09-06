@@ -277,7 +277,7 @@ Scope {
                                         controls.visible = false
                                         dashboardMedia.visible = false
                                         notificationPane.visible = false
-                                    }      
+                                    }
                                 }
 
                                 StyledButton {

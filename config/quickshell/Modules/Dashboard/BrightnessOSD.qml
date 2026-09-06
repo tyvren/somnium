@@ -13,9 +13,11 @@ Item {
     implicitHeight: 28
 
     function requestShow(customInterval) {
-        States.brightnessOSDOpen = true
-        hideTimer.interval = customInterval || 1500
-        hideTimer.restart()
+        if (!States.dashboardOpen) {
+            States.brightnessOSDOpen = true
+            hideTimer.interval = customInterval || 1500
+            hideTimer.restart()
+        }
     }
 
     Connections {

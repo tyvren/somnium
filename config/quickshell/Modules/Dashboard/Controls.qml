@@ -6,27 +6,25 @@ import qs.Components
 import qs.Themes
 import qs.Services
 
-RowLayout {
+ColumnLayout {
     anchors.fill: parent
-    spacing: 10
+    spacing: 4
 
     Item {
         id: brightnessControl
-        Layout.alignment: Qt.AlignHCenter
-        Layout.preferredWidth: 300
-        Layout.preferredHeight: 50
+        Layout.fillWidth: true
+        Layout.preferredHeight: 32
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 15
-            anchors.rightMargin: 15
-            spacing: 10
-            enabled: States.brightnessOSDOpen
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+            spacing: 8
 
             StyledText {
                 color: Theme.colAccent
                 size: 14
-                text: Brightness.brightness === 0 ? "󰃞" : "󰃠"
+                text: brightnessSlider.value === 0 ? "󰃞" : "󰃠"
             }
 
             Slider {
@@ -50,7 +48,7 @@ RowLayout {
                     Rectangle {
                         width: brightnessSlider.visualPosition * parent.width
                         height: parent.height
-                        color: Brightness.brightness === 0 ? Theme.colMuted : Theme.colAccent
+                        color: brightnessSlider.value === 0 ? Theme.colMuted : Theme.colAccent
                         radius: 3
                     }
                 }
@@ -67,10 +65,85 @@ RowLayout {
                 }
 
                 onMoved: {
-                Brightness.setBrightness(brightnessSlider.value)
-                root.requestShow(4000)
+                    Brightness.setBrightness(brightnessSlider.value)
+                    if (typeof root !== "undefined" && root.requestShow) {
+                        root.requestShow(4000)
+                    }
                 }
             }
-        }   
+        }
+    }
+
+    Item {
+        id: kbdBrightnessControl
+        Layout.fillWidth: true
+        Layout.preferredHeight: 32
+
+        RowLayout {
+            anchors.fill: parent
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+            spacing: 8
+
+            StyledText {
+                color: Theme.colAccent
+                size: 14
+                text: "󰌌"
+            }
+
+            Slider {
+                id: kbdBrightnessSlider
+                Layout.fillWidth: true
+                value: KeyboardBacklight.brightness
+                from: 0.0
+                to: 1.0
+
+                Connections {
+                    target: KeyboardBacklight
+                    function onBrightnessChanged() {
+                        if (!kbdBrightnessSlider.pressed) {
+                            kbdBrightnessSlider.value = KeyboardBacklight.brightness
+                        }
+                    }
+                }
+
+                background: Rectangle {
+                    x: kbdBrightnessSlider.leftPadding
+                    y: kbdBrightnessSlider.topPadding + kbdBrightnessSlider.availableHeight / 2 - height / 2
+                    implicitWidth: 200
+                    implicitHeight: 6
+                    width: kbdBrightnessSlider.availableWidth
+                    height: implicitHeight
+                    radius: 3
+                    color: Theme.colMuted
+                    opacity: 0.5
+
+                    Rectangle {
+                        width: kbdBrightnessSlider.visualPosition * parent.width
+                        height: parent.height
+                        color: kbdBrightnessSlider.value === 0 ? Theme.colMuted : Theme.colAccent
+                        radius: 3
+                    }
+                }
+
+                handle: Rectangle {
+                    x: kbdBrightnessSlider.leftPadding + kbdBrightnessSlider.visualPosition * (kbdBrightnessSlider.availableWidth - width)
+                    y: kbdBrightnessSlider.topPadding + kbdBrightnessSlider.availableHeight / 2 - height / 2
+                    implicitWidth: 12
+                    implicitHeight: 12
+                    radius: Config.data.rounding
+                    color: kbdBrightnessSlider.pressed ? Theme.colAccent : Theme.colBg
+                    border.color: Theme.colAccent
+                    border.width: 1
+                }
+
+                onMoved: {
+                    KeyboardBacklight.setBrightness(kbdBrightnessSlider.value)
+                    if (typeof root !== "undefined" && root.requestShow) {
+                        root.requestShow(4000)
+                    }
+                }
+            }
+        }
     }
 }
