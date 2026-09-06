@@ -315,6 +315,7 @@ Scope {
                                 Layout.preferredWidth: 400
                                 Layout.preferredHeight: 220
                                 color: "transparent"
+                                border.color: "transparent"
                                 
                                 Calendar {
                                     id: calendar
