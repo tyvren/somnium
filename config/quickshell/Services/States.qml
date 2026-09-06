@@ -7,6 +7,7 @@ QtObject {
 
     property bool bluetoothOpen: false
     property bool brightnessOSDOpen: false
+    property string currentView: "home"
     property bool dashboardOpen: false
     property bool launcherOpen: false
     property bool mediaPlayerOpen: false

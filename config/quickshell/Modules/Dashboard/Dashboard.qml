@@ -10,6 +10,30 @@ import qs.Services
 import qs.Themes
 
 Scope {
+    IpcHandler {
+        target: "dashboard"
+
+        function openAudio(): void {
+            States.dashboardOpen = true
+            States.currentView = "audio"
+        }
+
+        function openBluetooth(): void {
+            States.dashboardOpen = true
+            States.currentView = "bluetooth"
+        }
+
+        function openLauncher(): void {
+            States.dashboardOpen = true
+            States.currentView = "launcher"
+        }
+
+        function openNetwork(): void {
+            States.dashboardOpen = true
+            States.currentView = "network"
+        }
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -33,8 +57,7 @@ Scope {
                 property int compactHeight: 300
                 property int closedHeight: 28
                 property int openHeight: 400
-
-                property string currentView: "home"
+                property bool monitorFocused: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
 
                 anchors {
                     top: Config.data.barLayout === "top" 
@@ -49,41 +72,9 @@ Scope {
                 HyprlandFocusGrab {
                     id: focusGrab
                     windows: [dashboard]
-                    active: States.dashboardOpen
+                    active: States.dashboardOpen && dashboard.monitorFocused
                     onCleared: {
                         States.dashboardOpen = false
-                    }
-                }
-
-                onCurrentViewChanged: {
-                    if (States.dashboardOpen) {
-                        focusGrab.active = true
-                    } else {
-                        focusGrab.active = false
-                    }
-                } 
-
-                IpcHandler {
-                    target: "dashboard"
-
-                    function openAudio(): void {
-                        States.dashboardOpen = true
-                        dashboard.currentView = "audio"
-                    }
-
-                    function openBluetooth(): void {
-                        States.dashboardOpen = true
-                        dashboard.currentView = "bluetooth"
-                    }
-
-                    function openLauncher(): void {
-                        States.dashboardOpen = true
-                        dashboard.currentView = "launcher"
-                    }
-
-                    function openNetwork(): void {
-                        States.dashboardOpen = true
-                        dashboard.currentView = "network"
                     }
                 }
 
@@ -104,9 +95,8 @@ Scope {
                         hoverEnabled: true
                         onClicked: {
                             if (!States.dashboardOpen) {
-                                dashboard.currentView = "home"
+                                States.currentView = "home"
                                 States.dashboardOpen = true
-                                focusGrab.active = true
                             }
                         } 
                     }
@@ -129,7 +119,7 @@ Scope {
                     BrightnessOSD {
                         id: brightnessOSD
                         opacity: States.brightnessOSDOpen ? 1 : 0
-                        visible: opacity > 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -142,7 +132,7 @@ Scope {
                     MediaOSD {
                         id: mediaOSD
                         opacity: !States.dashboardOpen && States.mediaPlayerOpen ? 1 : 0
-                        visible: opacity > 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -155,7 +145,7 @@ Scope {
                     NotificationOSD {
                         id: notificationOSD
                         opacity: States.notificationOSDOpen ? 1 : 0
-                        visible: opacity > 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -168,7 +158,7 @@ Scope {
                     VolumeOSD {
                         id: volumeOSD
                         opacity: States.volumeOSDOpen ? 1 : 0
-                        visible: opacity > 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -201,10 +191,10 @@ Scope {
                     Loader {
                         id: viewLoader
                         anchors.fill: parent
-                        anchors.margins: dashboard.currentView === "bluetooth" || dashboard.currentView === "network" || dashboard.currentView === "audio" ? 10 : 0
-                        active: States.dashboardOpen
+                        anchors.margins: States.currentView === "bluetooth" || States.currentView === "network" || States.currentView === "audio" ? 10 : 0
+                        active: States.dashboardOpen && dashboard.monitorFocused
                         opacity: States.dashboardOpen ? 1 : 0
-                        visible: opacity > 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -214,7 +204,7 @@ Scope {
                         }
 
                         sourceComponent: {
-                            switch (dashboard.currentView) {
+                            switch (States.currentView) {
                                 case "audio": return audioView
                                 case "bluetooth": return bluetoothView
                                 case "launcher": return launcherView
@@ -227,8 +217,8 @@ Scope {
                         id: dashHomeScreen
                         anchors.fill: parent
                         color: "transparent"
-                        opacity: States.dashboardOpen && dashboard.currentView === "home" ? 1 : 0
-                        visible: opacity > 0
+                        opacity: States.dashboardOpen && States.currentView === "home" ? 1 : 0
+                        visible: opacity > 0 && dashboard.monitorFocused
 
                         Behavior on opacity {
                             NumberAnimation {
@@ -240,7 +230,7 @@ Scope {
                         ColumnLayout {
                             id: homeScreenColumn
                             anchors.fill: parent
-                            visible: States.dashboardOpen
+                            visible: States.dashboardOpen && dashboard.monitorFocused
 
                             RowLayout {
                                 id: buttonRow
@@ -335,8 +325,8 @@ Scope {
                     }
 
                     state: {
-                        if (!States.dashboardOpen) return "closed"
-                        if (dashboard.currentView === "home") return "compact"
+                        if (!States.dashboardOpen || !dashboard.monitorFocused) return "closed"
+                        if (States.currentView === "home") return "compact"
                         return "open"
                     }
 
