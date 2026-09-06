@@ -78,7 +78,6 @@ Item {
     RowLayout {
         anchors.fill: parent
         anchors.leftMargin: 10
-        anchors.rightMargin: 15
         spacing: 10
 
         Clock {
