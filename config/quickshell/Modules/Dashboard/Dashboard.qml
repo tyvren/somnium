@@ -245,7 +245,23 @@ Scope {
                                     buttonHeight: 35
                                     onClicked: {
                                         calendar.visible = true
+                                        controls.visible = false
                                         performance.visible = false
+                                        notificationPane.visible = false
+                                        dashboardMedia.visible = false
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: controlsBtn
+                                    icon: ""
+                                    buttonWidth: 50
+                                    buttonHeight: 35
+                                    onClicked: {
+                                        controls.visible = true
+                                        calendar.visible = false
+                                        performance.visible = false
+                                        notificationPane.visible = false
                                         dashboardMedia.visible = false
                                     }
                                 }
@@ -258,6 +274,7 @@ Scope {
                                     onClicked: { 
                                         performance.visible = true
                                         calendar.visible = false
+                                        controls.visible = false
                                         dashboardMedia.visible = false
                                     }      
                                 }
@@ -270,9 +287,25 @@ Scope {
                                     onClicked: { 
                                         dashboardMedia.visible = true
                                         calendar.visible = false
+                                        controls.visible = false
+                                        notificationPane.visible = false
+                                        performance.visible = false
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: notificationsBtn
+                                    icon: ""
+                                    buttonWidth: 50
+                                    buttonHeight: 35
+                                    onClicked: { 
+                                        notificationPane.visible = true
+                                        calendar.visible = false
+                                        controls.visible = false
+                                        dashboardMedia.visible = false
                                         performance.visible = false
                                     }     
-                                }
+                                }  
                             }
 
                             StyledRect {
@@ -285,7 +318,7 @@ Scope {
                                 
                                 Calendar {
                                     id: calendar
-                                    visible: false
+                                    visible: true
 
                                     onVisibleChanged:
                                         if (calendar.visible) {
@@ -295,9 +328,21 @@ Scope {
                                         }
                                 }
 
+                                Controls {
+                                    id: controls
+                                    visible: false
+
+                                    onVisibleChanged:
+                                        if (controls.visible) {
+                                            controlsBtn.active = true
+                                        } else {
+                                            controlsBtn.active = false
+                                        }
+                                }
+
                                 Performance {
                                     id: performance
-                                    visible: true
+                                    visible: false
 
                                     onVisibleChanged:
                                         if (performance.visible) {
@@ -318,6 +363,18 @@ Scope {
                                             mediaBtn.active = true
                                         } else {
                                             mediaBtn.active = false
+                                        }
+                                }
+
+                                NotificationPane {
+                                    id: notificationPane
+                                    visible: false
+
+                                    onVisibleChanged:
+                                        if (notificationPane.visible) {
+                                            notificationsBtn.active = true
+                                        } else {
+                                            notificationsBtn.active = false
                                         }
                                 }
                             }

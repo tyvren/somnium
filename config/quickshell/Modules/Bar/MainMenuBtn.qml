@@ -3,7 +3,6 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
 import qs.Components
-import qs.Modules.Menus
 import qs.Themes
 import qs.Services
 

@@ -8,7 +8,6 @@ import Quickshell.Widgets
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import qs.Components
-import qs.Modules.Menus
 import qs.Themes
 import qs.Services
 
@@ -110,7 +109,7 @@ Scope {
                     SystemTrayApps {
                         id: systemTrayAppsTop
                         anchors.right: parent.right
-                        anchors.rightMargin: batteryBtnTop.visible ? 190 : 130
+                        anchors.rightMargin: batteryBtnTop.visible ? 165 : 100
                         anchors.verticalCenter: parent.verticalCenter 
                     }
 
@@ -118,28 +117,22 @@ Scope {
                         id: batteryBtnTop
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 130
+                        anchors.rightMargin: 100
                     }
 
                     AudioBtn {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 100
+                        anchors.rightMargin: 70
                     }
 
                     BluetoothBtn {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 70
-                    }
-
-                    NetworkBtn {
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 40
                     }
 
-                    SidePaneBtn {
+                    NetworkBtn {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 10
