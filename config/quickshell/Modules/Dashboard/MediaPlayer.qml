@@ -48,7 +48,7 @@ Item {
         anchors.fill: parent 
         anchors.margins: 2
         opacity: 0.2
-        radius: 2
+        radius: Config.data.rounding
         color: "transparent"
 
         Image {
