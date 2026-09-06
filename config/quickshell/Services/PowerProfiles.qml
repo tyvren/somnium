@@ -9,6 +9,14 @@ Singleton {
 
     property int currentProfile: PowerProfiles.profile
     readonly property bool hasPerformanceProfile: PowerProfiles.hasPerformanceProfile ?? false
+    
+    readonly property string profileName: {
+        switch (root.currentProfile) {
+            case 0: return "Power Saver"
+            case 1: return "Balanced"
+            case 2: return "Performance"
+        }
+    }
 
     function setPowerSaver() {
         PowerProfiles.profile = PowerProfile.PowerSaver;

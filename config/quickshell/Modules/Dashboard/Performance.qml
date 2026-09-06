@@ -6,23 +6,30 @@ import qs.Components
 import qs.Themes
 import qs.Services
 
-ColumnLayout {
+RowLayout {
     id: performanceRoot
     anchors.fill: parent
     spacing: 10
 
-    RowLayout {
+    ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
         spacing: 10
 
-        StyledButton {
+        StyledText {
+            id: currentProfile
+            text: "Current profile: " + PowerProfiles.profileName
+            size: 9
+        }
+
+        StyledButtonLeftText {
             id: powerSave
-            Layout.preferredHeight: 50
-            Layout.preferredWidth: 100
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 150
             icon: "󰌪"
             text: "Power Saving"
-            textSize: 8
+            iconSize: 12
+            textSize: 9
 
             Process { id: powerSaveNotification; command: ["notify-send", "Power Save Mode Enabled"] }
 
@@ -32,13 +39,14 @@ ColumnLayout {
             }
         } 
 
-        StyledButton {
+        StyledButtonLeftText {
             id: balanced
-            Layout.preferredHeight: 50
-            Layout.preferredWidth: 100
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 150
             icon: "󰗑"
             text: "Balanced"
-            textSize: 8
+            iconSize: 12
+            textSize: 9
 
             Process { id: balancedNotification; command: ["notify-send", "Balanced Mode Enabled"] }
 
@@ -48,13 +56,14 @@ ColumnLayout {
             }
         }
 
-        StyledButton {
+        StyledButtonLeftText {
             id: performance
-            Layout.preferredHeight: 50
-            Layout.preferredWidth: 100
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 150
             icon: "󰊚"
             text: "Performance"
-            textSize: 8
+            iconSize: 12
+            textSize: 9
 
             Process { id: performanceNotification; command: ["notify-send", "Performance Mode Enabled"] }
 
@@ -66,7 +75,7 @@ ColumnLayout {
     }
 
 
-    RowLayout {
+    ColumnLayout {
         id: statsRow
         Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
