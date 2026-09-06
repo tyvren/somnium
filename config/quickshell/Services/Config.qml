@@ -35,18 +35,18 @@ Singleton {
             property string barLayout: "top"
             property int barMargin: 10
 
-            property int gapsIn: 5
+            property int gapsIn: 4
             property int gapsOut: 10
-            property int borderSize: 2
-            property int rounding: 10
+            property int borderSize: 1
+            property int rounding: 2
             property real activeOpacity: 1.0
             property real inactiveOpacity: 0.8
-            property real qsTransparency: 0.0
+            property real qsTransparency: 0.25
             property bool allowTearing: false
             property bool shadowEnabled: true
             property bool blurEnabled: true
-            property int blurSize: 8
-            property int blurPasses: 2
+            property int blurSize: 3
+            property int blurPasses: 3
             property bool disableHyprlandLogo: true
             property int forceDefaultWallpaper: 0
             property string sysMonitor: "true"
