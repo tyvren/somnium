@@ -84,7 +84,7 @@ Item {
         Clock {
             id: mediaClock
             orientation: "horizontal"
-            textSize: 12
+            textSize: 13
             Layout.leftMargin: 20
             Layout.rightMargin: 20
         }
