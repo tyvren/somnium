@@ -22,7 +22,7 @@ Scope {
                 required property var modelData
                 screen: modelData
 
-                property bool isFocusedMonitor: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
+                property bool monitorFocused: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
 
                 color: "transparent"
                 implicitHeight: 32
@@ -76,7 +76,7 @@ Scope {
                         anchors.left: parent.left
                         anchors.leftMargin: 60
                         anchors.verticalCenter: parent.verticalCenter
-                        opacity: States.mainMenuOpen && bar.isFocusedMonitor ? 1 : 0
+                        opacity: States.mainMenuOpen && bar.monitorFocused ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
@@ -90,7 +90,7 @@ Scope {
                     Workspaces {
                         id: workspacesButtonTop
                         anchors.left: parent.left
-                        anchors.leftMargin: (States.mainMenuOpen && bar.isFocusedMonitor) ? 170 : 60
+                        anchors.leftMargin: (States.mainMenuOpen && bar.monitorFocused) ? 170 : 60
                         anchors.verticalCenter: parent.verticalCenter
 
                         Behavior on anchors.leftMargin {
