@@ -235,7 +235,7 @@ Scope {
                             RowLayout {
                                 id: buttonRow
                                 Layout.alignment: Qt.AlignHCenter
-                                Layout.topMargin: 15
+                                Layout.topMargin: 10
                                 spacing: 10
                                 
                                 StyledButton {
@@ -313,8 +313,8 @@ Scope {
                                 id: menuWindow
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                                 Layout.bottomMargin: 15
-                                Layout.preferredWidth: 400
-                                Layout.preferredHeight: 220
+                                Layout.preferredWidth: 420
+                                Layout.preferredHeight: 240
                                 color: "transparent"
                                 border.color: "transparent"
                                 
@@ -356,8 +356,6 @@ Scope {
 
                                 MediaPlayer {
                                     id: dashboardMedia
-                                    width: 400
-                                    height: 220
                                     visible: false
 
                                     onVisibleChanged:

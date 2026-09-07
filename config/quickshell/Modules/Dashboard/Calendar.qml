@@ -10,7 +10,8 @@ import qs.Services
 ColumnLayout {
     id: root
     anchors.fill: parent
-    spacing: 5
+    anchors.topMargin: 10
+    spacing: 10
 
     Rectangle {
         id: container
@@ -22,6 +23,12 @@ ColumnLayout {
             anchors.fill: parent
             anchors.leftMargin: 5
             anchors.rightMargin: 5
+
+            StyledText {
+                Layout.alignment: Qt.AlignHCenter
+                text: grid.today.toLocaleDateString(grid.locale, "MMMM yyyy")
+                size: 14
+            }
 
             DayOfWeekRow {
                 locale: grid.locale
@@ -54,9 +61,8 @@ ColumnLayout {
                         text: model.day
                         color: model.today ? Theme.colText : model.month === grid.month ? Theme.colAccent : "transparent"
                     }
-                }      
+                }       
             }
         }
     }
 }
-

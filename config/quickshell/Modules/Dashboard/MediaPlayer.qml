@@ -10,8 +10,7 @@ import qs.Themes
 
 Item {
     id: root
-    implicitWidth: 480
-    implicitHeight: 28
+    anchors.fill: parent 
 
     property int btnTextSize: 20
     property int artistTextSize: 12

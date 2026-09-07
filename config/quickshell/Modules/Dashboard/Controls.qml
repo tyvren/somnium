@@ -8,7 +8,10 @@ import qs.Services
 
 ColumnLayout {
     anchors.fill: parent
-    spacing: 4
+
+    StyledText {
+        text: "Display Brightness"
+    }
 
     Item {
         id: brightnessControl
@@ -72,6 +75,10 @@ ColumnLayout {
                 }
             }
         }
+    }
+
+    StyledText {
+      text: "Keyboard Backlight"
     }
 
     Item {
