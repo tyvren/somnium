@@ -311,10 +311,9 @@ Scope {
 
                             StyledRect {
                                 id: menuWindow
-                                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                                Layout.bottomMargin: 15
-                                Layout.preferredWidth: 420
-                                Layout.preferredHeight: 240
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                Layout.margins: 10
                                 color: "transparent"
                                 border.color: "transparent"
                                 

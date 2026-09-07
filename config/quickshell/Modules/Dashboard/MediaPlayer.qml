@@ -14,7 +14,7 @@ Item {
 
     property int btnTextSize: 20
     property int artistTextSize: 12
-    property int titleTextSize: 12
+    property int titleTextSize: 14
     property int albumWidth: 100
     property int albumHeight: 100
 
@@ -45,8 +45,7 @@ Item {
     ClippingRectangle {
         id: bgImageContainer
         anchors.fill: parent 
-        anchors.margins: 2
-        opacity: 0.2
+        opacity: 0.3
         radius: Config.data.rounding
         color: "transparent"
 
@@ -74,111 +73,182 @@ Item {
         }
     }
 
-    ColumnLayout {
+    RowLayout {
+        id: rootRow
         anchors.fill: parent
-        spacing: 0
 
-        Item {
-            id: albumArt
-            width: root.albumWidth
-            height: root.albumHeight
-            Layout.alignment: Qt.AlignHCenter
+        ColumnLayout {
+            id: leftColumn
+            Layout.alignment: Qt.alignLeft
+            Layout.leftMargin: 25
+            spacing: 10
 
-            ClippingRectangle {
-                anchors.fill: parent
-                radius: 4
-                color: "transparent"
+            Item {
+                id: albumArt
+                Layout.alignment: Qt.AlignHCenter
+                width: root.albumWidth
+                height: root.albumHeight
 
-                Image {
-                    id: albumImage
+                ClippingRectangle {
                     anchors.fill: parent
-                    asynchronous: true
-                    fillMode: Image.PreserveAspectCrop
-                    source: {
-                        const url = Players.active ? Players.active.trackArtUrl : "";
-                        if (!url || url === "") {
-                            return albumImage.source;
+                    radius: 4
+                    color: "transparent"
+
+                    Image {
+                        id: albumImage
+                        anchors.fill: parent
+                        asynchronous: true
+                        fillMode: Image.PreserveAspectCrop
+                        source: {
+                            const url = Players.active ? Players.active.trackArtUrl : "";
+                            if (!url || url === "") {
+                                return albumImage.source;
+                            }
+                            return (url.startsWith("/") && !url.startsWith("file://")) ? "file://" + url : url;
                         }
-                        return (url.startsWith("/") && !url.startsWith("file://")) ? "file://" + url : url;
                     }
                 }
             }
+
+            StyledText {
+                id: artistText
+                Layout.alignment: Qt.AlignHCenter
+                color: Theme.colAccent
+                size: root.artistTextSize
+                text: Players.active ? Players.artist(Players.active) : "No media playing"
+                elide: Text.ElideRight
+            }
         }
 
-        RowLayout {
-            id: playerControls
-            Layout.alignment: Qt.AlignHCenter
+        ColumnLayout {
+            id: rightColumn
+            Layout.alignment: Qt.alignRight
             spacing: 20
 
-            StyledButton {
-                id: prevText
-                Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 20
-                Layout.preferredHeight: 20
-                color: "transparent"
-                borderColor: "transparent" 
-                textSize: root.btnTextSize
-                text: "󰒮"
-                onClicked: {
-                    if (Players.active) {
-                          Players.active.previous()
+            StyledText {
+                id: titleText
+                Layout.alignment: Qt.AlignHCenter
+                Layout.maximumWidth: 280
+                color: Theme.colAccent
+                size: root.titleTextSize
+                text: Players.active ? Players.title(Players.active) : ""
+                elide: Text.ElideRight
+            }
+
+            RowLayout {
+                id: playerControls
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 20
+
+                StyledButton {
+                    id: prevText
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 20
+                    Layout.preferredHeight: 20
+                    color: "transparent"
+                    borderColor: "transparent" 
+                    textSize: root.btnTextSize
+                    text: "󰒮"
+                    onClicked: {
+                        if (Players.active) {
+                            Players.active.previous()
+                        }
+                    }
+                }
+
+                StyledButton {
+                    id: playText
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 20
+                    Layout.preferredHeight: 20
+                    color: "transparent"
+                    borderColor: "transparent" 
+                    textSize: root.btnTextSize
+                    text: Players.isPlaying ? "" : ""
+                    onClicked: {
+                        if (Players.active) {
+                            Players.active.togglePlaying()
+                        }
+                    }
+                }
+
+                StyledButton {
+                    id: nextText
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 20
+                    Layout.preferredHeight: 20
+                    color: "transparent"
+                    borderColor: "transparent" 
+                    textSize: root.btnTextSize
+                    text: "󰒭"
+                    onClicked: {
+                        if (Players.active) {
+                            Players.active.next()
+                        }
                     }
                 }
             }
 
-            StyledButton {
-                id: playText
-                Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 20
-                Layout.preferredHeight: 20
-                color: "transparent"
-                borderColor: "transparent" 
-                textSize: root.btnTextSize
-                text: Players.active && Players.active.isPlaying ? "" : ""
-                onClicked: {
-                    if (Players.active) {
-                        Players.active.togglePlaying()
+            Item {
+                id: trackProgressSlider
+                Layout.preferredWidth: 260
+                Layout.preferredHeight: 32
+
+                property real positionSeconds: Players.active ? Players.active.position : 0
+                property real lengthSeconds: Players.active ? Players.length(Players.active) : 0
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 12
+
+                    StyledText {
+                        id: currentTimeText
+                        Layout.alignment: Qt.AlignVCenter
+                        text: Players.formatTime(trackProgressSlider.positionSeconds)
+                        size: 10
+                        color: Theme.colAccent
+                        opacity: 0.8
+                    }
+
+                    Item {
+                        id: trackContainer
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        property real progressRatio: trackProgressSlider.lengthSeconds > 0 
+                            ? Math.min(1.0, Math.max(0.0, trackProgressSlider.positionSeconds / trackProgressSlider.lengthSeconds)) 
+                            : 0
+
+                        Rectangle {
+                            id: trackBackground
+                            anchors.centerIn: parent
+                            width: parent.width
+                            height: 4
+                            radius: height / 2
+                            color: Theme.colMuted 
+
+                            Rectangle {
+                                id: filledTrack
+                                anchors.left: parent.left
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                width: parent.width * trackContainer.progressRatio
+                                radius: parent.radius
+                                color: Theme.colAccent
+                            }
+                        }
+                    }
+
+                    StyledText {
+                        id: totalTimeText
+                        Layout.alignment: Qt.AlignVCenter
+                        text: Players.formatTime(trackProgressSlider.lengthSeconds)
+                        size: 10
+                        color: Theme.colAccent
+                        opacity: 0.8
                     }
                 }
             }
-
-            StyledButton {
-                id: nextText
-                Layout.alignment: Qt.AlignVCenter
-                Layout.preferredWidth: 20
-                Layout.preferredHeight: 20
-                color: "transparent"
-                borderColor: "transparent" 
-                textSize: root.btnTextSize
-                text: "󰒭"
-                onClicked: {
-                    if (Players.active) {
-                        Players.active.next()
-                    }
-                }
-            }
-        }
-
-        StyledText {
-            id: artistText
-            Layout.alignment: Qt.AlignHCenter
-            color: Theme.colAccent
-            size: root.artistTextSize
-            text: Players.active ? (Players.active.trackArtist) : "No media playing"
-            elide: Text.ElideRight
-        }
-
-        StyledText {
-            id: titleText
-            Layout.alignment: Qt.AlignHCenter
-            Layout.maximumWidth: parent.width
-            Layout.leftMargin: 5
-            color: Theme.colAccent
-            size: root.titleTextSize
-            bold: true
-            text: Players.active ? (Players.active.trackTitle) : ""
-            elide: Text.ElideRight
         }
     }
 }
-

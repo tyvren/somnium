@@ -11,6 +11,7 @@ ColumnLayout {
 
     StyledText {
         text: "Display Brightness"
+        Layout.leftMargin: 10
     }
 
     Item {
@@ -79,6 +80,7 @@ ColumnLayout {
 
     StyledText {
       text: "Keyboard Backlight"
+      Layout.leftMargin: 10
     }
 
     Item {
