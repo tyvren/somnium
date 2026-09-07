@@ -7,61 +7,53 @@ import qs.Components
 import qs.Themes
 import qs.Services
 
-ColumnLayout {
+RowLayout {
     id: root
     anchors.fill: parent
     anchors.topMargin: 10
-    spacing: 10
 
-    Rectangle {
-        id: container
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        color: "transparent" 
+    ColumnLayout {
+      id: calendarColumn
+      Layout.alignment: Qt.AlignHCenter
 
-        ColumnLayout {
-            anchors.fill: parent
-            anchors.leftMargin: 5
-            anchors.rightMargin: 5
+        StyledText {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+            Layout.leftMargin: 60
+            text: grid.today.toLocaleDateString(grid.locale, "MMMM yyyy")
+            size: 14
+        }
 
-            StyledText {
-                Layout.alignment: Qt.AlignHCenter
-                text: grid.today.toLocaleDateString(grid.locale, "MMMM yyyy")
-                size: 14
+        DayOfWeekRow {
+            locale: grid.locale
+            Layout.preferredWidth: 240
+            delegate: StyledText {
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                text: model.shortName
             }
+        }
 
-            DayOfWeekRow {
-                locale: grid.locale
-                Layout.fillWidth: true
-                delegate: StyledText {
+        MonthGrid {
+            id: grid
+            readonly property date today: new Date()
+            month: today.getMonth()
+            year: today.getFullYear()
+            locale: Qt.locale("en_US")
+            Layout.preferredWidth: 240
+            Layout.fillHeight: true
+            delegate: Rectangle {
+                required property var model
+                color: model.month === grid.month ? Theme.colBg : "transparent"
+                border.color: model.today ? Theme.colAccent : "transparent"
+                radius: Config.data.rounding
+
+                StyledText {
+                    anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    text: model.shortName
+                    text: model.day
+                    color: model.today ? Theme.colText : model.month === grid.month ? Theme.colAccent : "transparent"
                 }
-            }
-
-            MonthGrid {
-                id: grid
-                readonly property date today: new Date()
-                month: today.getMonth()
-                year: today.getFullYear()
-                locale: Qt.locale("en_US")
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                delegate: Rectangle {
-                    required property var model
-                    color: model.month === grid.month ? Theme.colBg : "transparent"
-                    border.color: model.today ? Theme.colAccent : "transparent"
-                    radius: Config.data.rounding
-
-                    StyledText {
-                        anchors.centerIn: parent
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        text: model.day
-                        color: model.today ? Theme.colText : model.month === grid.month ? Theme.colAccent : "transparent"
-                    }
-                }       
             }
         }
     }
