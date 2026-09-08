@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
+import QtQuick.Shapes
 import Quickshell
 import Quickshell.Widgets
 import qs.Components
@@ -79,7 +80,7 @@ Item {
 
         ColumnLayout {
             id: leftColumn
-            Layout.alignment: Qt.alignLeft
+            Layout.alignment: Qt.AlignLeft
             Layout.leftMargin: 25
             spacing: 10
 
@@ -122,13 +123,15 @@ Item {
 
         ColumnLayout {
             id: rightColumn
-            Layout.alignment: Qt.alignRight
-            spacing: 20
+            Layout.alignment: Qt.AlignRight
+            Layout.leftMargin: 25
+            Layout.rightMargin: 25
+            spacing: 33
 
             StyledText {
                 id: titleText
                 Layout.alignment: Qt.AlignHCenter
-                Layout.maximumWidth: 280
+                Layout.maximumWidth: 220
                 color: Theme.colAccent
                 size: root.titleTextSize
                 text: Players.active ? Players.title(Players.active) : ""
@@ -189,64 +192,79 @@ Item {
                 }
             }
 
-            Item {
-                id: trackProgressSlider
-                Layout.preferredWidth: 260
-                Layout.preferredHeight: 32
+            RowLayout {
+                id: trackProgressContainer
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 8
 
                 property real positionSeconds: Players.active ? Players.active.position : 0
                 property real lengthSeconds: Players.active ? Players.length(Players.active) : 0
 
-                RowLayout {
-                    anchors.fill: parent
-                    spacing: 12
+                StyledText {
+                    id: currentTimeText
+                    Layout.alignment: Qt.AlignVCenter
+                    text: Players.formatTime(trackProgressContainer.positionSeconds)
+                    size: 10
+                    color: Theme.colAccent
+                    opacity: 0.8
+                }
 
-                    StyledText {
-                        id: currentTimeText
-                        Layout.alignment: Qt.AlignVCenter
-                        text: Players.formatTime(trackProgressSlider.positionSeconds)
-                        size: 10
-                        color: Theme.colAccent
-                        opacity: 0.8
-                    }
+                Item {
+                    id: progressVisual
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                    implicitHeight: 14
+
+                    readonly property real length: Math.max(1, trackProgressContainer.lengthSeconds)
+                    readonly property real pos: Math.min(length, Math.max(0, trackProgressContainer.positionSeconds))
+                    readonly property real progressRatio: pos / length
 
                     Item {
-                        id: trackContainer
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
+                        id: played
+                        objectName: "playedWave"
+                        width: parent.width * progressVisual.progressRatio
+                        height: parent.height
+                        clip: true
 
-                        property real progressRatio: trackProgressSlider.lengthSeconds > 0 
-                            ? Math.min(1.0, Math.max(0.0, trackProgressSlider.positionSeconds / trackProgressSlider.lengthSeconds)) 
-                            : 0
+                        Shape {
+                            id: wave
+                            objectName: "seekWave"
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            width: progressVisual.width
+                            preferredRendererType: Shape.CurveRenderer
 
-                        Rectangle {
-                            id: trackBackground
-                            anchors.centerIn: parent
-                            width: parent.width
-                            height: 4
-                            radius: height / 2
-                            color: Theme.colMuted 
+                            property real amplitude: 3
+                            Behavior on amplitude { NumberAnimation { duration: 400 } }
 
-                            Rectangle {
-                                id: filledTrack
-                                anchors.left: parent.left
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                width: parent.width * trackContainer.progressRatio
-                                radius: parent.radius
-                                color: Theme.colAccent
+                            ShapePath {
+                                strokeColor: Theme.colAccent
+                                strokeWidth: 3
+                                fillColor: "transparent"
+                                capStyle: ShapePath.RoundCap
+
+                                PathPolyline {
+                                    path: {
+                                        let points = []
+                                        for (let x = 0; x <= wave.width; x += 3) {
+                                            points.push(Qt.point(x, 7 + wave.amplitude * Math.sin(x * Math.PI / 14)))
+                                        }
+                                        return points
+                                    }
+                                }
                             }
                         }
                     }
+                }
 
-                    StyledText {
-                        id: totalTimeText
-                        Layout.alignment: Qt.AlignVCenter
-                        text: Players.formatTime(trackProgressSlider.lengthSeconds)
-                        size: 10
-                        color: Theme.colAccent
-                        opacity: 0.8
-                    }
+                StyledText {
+                    id: totalTimeText
+                    Layout.alignment: Qt.AlignVCenter
+                    text: Players.formatTime(trackProgressContainer.lengthSeconds)
+                    size: 10
+                    color: Theme.colAccent
+                    opacity: 0.8
                 }
             }
         }
