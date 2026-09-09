@@ -80,8 +80,7 @@ Item {
 
         ColumnLayout {
             id: leftColumn
-            Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: 25
+            Layout.alignment: Qt.AlignHCenter
             spacing: 10
 
             Item {
@@ -123,9 +122,7 @@ Item {
 
         ColumnLayout {
             id: rightColumn
-            Layout.alignment: Qt.AlignRight
-            Layout.leftMargin: 25
-            Layout.rightMargin: 25
+            Layout.alignment: Qt.AlignHCenter
             spacing: 33
 
             StyledText {
@@ -211,8 +208,8 @@ Item {
 
                 Item {
                     id: progressVisual
-                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 150
                     implicitHeight: 14
 
                     readonly property real length: Math.max(1, trackProgressContainer.lengthSeconds)
