@@ -84,6 +84,24 @@ Scope {
                                 easing.type: Easing.InOutCubic
                             }
                         }
+                          
+                        Timer {
+                            id: menuTimer
+                            running: States.mainMenuOpen
+                            interval: 5000
+                            onTriggered: States.mainMenuOpen = false
+                        }
+              
+                        HoverHandler {
+                            id: quickMenuHH
+                            onHoveredChanged: {
+                                if (hovered) {
+                                    menuTimer.running = false
+                                } else {
+                                    menuTimer.running = true
+                                }
+                            }
+                        }
                     }
 
                     Workspaces {
@@ -98,12 +116,6 @@ Scope {
                                 easing.type: Easing.InOutCubic
                             }
                         }
-
-                        Timer {
-                            running: States.mainMenuOpen
-                            interval: 15000
-                            onTriggered: States.mainMenuOpen = false
-                        } 
                     }
 
                     SystemTrayApps {
