@@ -41,9 +41,9 @@ sleep_seconds=$((chosen_sleeptime * 60))
 
 cat >"$IDLE_CONFIG" <<-EOF
 general {
-  lock_cmd = pidof hyprlock || hyprlock
+  lock_cmd = qs ipc call lockscreen lock
   before_sleep_cmd = loginctl lock-session
-  after_sleep_cmd = hyprctl dispatch dpms on
+  after_sleep_cmd = hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' 
 }
 
 listener {
@@ -59,8 +59,8 @@ listener {
 
 listener {
   timeout = $display_seconds
-  on-timeout = hyprctl dispatch dpms off
-  on-resume = hyprctl dispatch dpms on
+  on-timeout = hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })' 
+  on-resume = hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
 }
 EOF
 
