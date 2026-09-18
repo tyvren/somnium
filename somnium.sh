@@ -71,6 +71,7 @@ enable_service "power-profiles-daemon.service"
 
 log_step "Enabling user services"
 enable_user_service "app-com.mitchellh.ghostty.service"
+enable_user_service "hypridle"
 
 log_step "Setting up somnium bootloader logo"
 enable_plymouth

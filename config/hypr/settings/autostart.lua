@@ -8,8 +8,7 @@
 -- Or execute your favorite apps at launch like this:
 
 hl.on("hyprland.start", function()
-	hl.exec_cmd("hypridle")
-	hl.exec_cmd("qs")
+	hl.exec_cmd("uwsm app -- qs")
 	hl.exec_cmd("uwsm app -- firefox")
 	hl.exec_cmd("uwsm app -- steam")
 	hl.exec_cmd("uwsm app -- discord")
