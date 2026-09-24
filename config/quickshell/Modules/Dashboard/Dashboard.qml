@@ -52,6 +52,7 @@ Scope {
                     item: dashboardBackground 
                 }
 
+                property int osdAnimSpeed: 300
                 property int containerWidth: 480
                 property int containerHeight: 400
                 property int compactHeight: 300
@@ -110,7 +111,7 @@ Scope {
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: 350
+                                duration: dashboard.osdAnimSpeed
                                 easing.type: Easing.InOutCubic
                             }
                         }
@@ -123,7 +124,7 @@ Scope {
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: 350
+                                duration: dashboard.osdAnimSpeed
                                 easing.type: Easing.InOutCubic
                             }
                         }
@@ -136,7 +137,7 @@ Scope {
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: 350
+                                duration: dashboard.osdAnimSpeed
                                 easing.type: Easing.InOutCubic
                             }
                         }
@@ -149,7 +150,7 @@ Scope {
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: 350
+                                duration: dashboard.osdAnimSpeed
                                 easing.type: Easing.InOutCubic
                             }
                         }
@@ -162,7 +163,7 @@ Scope {
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: 350
+                                duration: dashboard.osdAnimSpeed
                                 easing.type: Easing.InOutCubic
                             }
                         }
