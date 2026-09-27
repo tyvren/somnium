@@ -221,7 +221,7 @@ ScrollView {
                     Layout.fillWidth: true
 
                     StyledText {
-                        text: "Active Opacity"
+                        text: "Active Window Opacity"
                         color: Theme.colText
                         Layout.fillWidth: true
                     }
@@ -252,7 +252,7 @@ ScrollView {
                     Layout.fillWidth: true
 
                     StyledText {
-                        text: "Inactive Opacity"
+                        text: "Inactive Window Opacity"
                         color: Theme.colText
                         Layout.fillWidth: true
                     }
@@ -274,6 +274,37 @@ ScrollView {
 
                         StyledText {
                             text: Config.data.inactiveOpacity.toFixed(1)
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    StyledText {
+                        text: "Shell Transparency"
+                        color: Theme.colText
+                        Layout.fillWidth: true
+                      }
+
+                    StyledSlider {
+                        inputValue: Config.data.qsTransparency
+                        fromValue: 0.0
+                        toValue: 0.9
+                        stepSizeValue: 0.05
+                        onMoved: (val) => { Config.data.qsTransparency = val; appearancePane.applyHypr(); }
+                    }
+
+                    Rectangle {
+                        id: shellTransparencyTextContainer
+                        width: 20
+                        height: 10
+                        color: "transparent"
+                        Layout.leftMargin: 10
+
+                        StyledText {
+                            text: Config.data.qsTransparency.toFixed(2)
                             anchors.centerIn: parent
                         }
                     }
@@ -550,42 +581,6 @@ ScrollView {
                                 border.width: Config.data.borderSize
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        DividerLine {
-            Layout.fillWidth: true
-        }
-
-        StyledText {
-            text: "Transparency"
-            color: Theme.colAccent
-            size: 12
-            bold: true
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 8
-
-            Repeater {
-                model: [
-                    { label: "0%",   value: 0.00 },
-                    { label: "25%",  value: 0.25 },
-                    { label: "50%",  value: 0.50 },
-                    { label: "75%",  value: 0.75 }
-                ]
-
-                StyledButton {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-                    text: modelData.label
-                    active: Config.data.qsTransparency == modelData.value
-
-                    onClicked: {
-                        Config.data.qsTransparency = modelData.value
                     }
                 }
             }
