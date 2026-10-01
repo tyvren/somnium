@@ -45,6 +45,16 @@ hl.window_rule({
 	float = true,
 })
 
+-- Somnium settings menu
+
+hl.window_rule({
+	name = "somnium-settings",
+	match = {
+		class = "org.quickshell",
+	},
+	float = true,
+})
+
 -- Default app rules
 
 hl.window_rule({
