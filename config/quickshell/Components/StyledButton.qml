@@ -11,11 +11,16 @@ Item {
     property string text: ""
     property string color: Theme.colBg
     property string borderColor: Theme.colMuted
+    property int iconSize: 12
     property int textSize: 12
     property int buttonWidth: 180
     property int buttonHeight: 40
     property bool active: false
+    readonly property alias hovered: mouseArea.containsMouse
+
     signal clicked()
+    signal entered()
+    signal exited()
 
     implicitWidth: root.buttonWidth
     implicitHeight: root.buttonHeight
@@ -49,7 +54,7 @@ Item {
 
             StyledText {
                 text: root.icon
-                size: root.textSize
+                size: root.iconSize
                 color: (root.active || mouseArea.containsMouse) ? Theme.colAccent : Theme.colText
                 visible: root.icon !== ""
                 Behavior on color { ColorAnimation { duration: 150 } }
@@ -69,6 +74,8 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: root.clicked()
+            onEntered: root.entered()
+            onExited: root.exited()
         }
     }
 }

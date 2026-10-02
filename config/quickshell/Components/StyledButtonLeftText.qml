@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
+import qs.Components
 import qs.Services
 import qs.Themes
 
@@ -9,6 +9,7 @@ Item {
     id: root
     property string icon: ""
     property string text: ""
+    property string tooltipText: ""
     property string color: Theme.colBg
     property string borderColor: Theme.colMuted
     property int iconSize: 14
@@ -16,23 +17,13 @@ Item {
     property int buttonWidth: 180
     property int buttonHeight: 40
     property bool active: false
+
     signal clicked()
+    signal entered()
+    signal exited()
 
     implicitWidth: root.buttonWidth
     implicitHeight: root.buttonHeight
-
-    MultiEffect {
-        anchors.fill: buttonBackground
-        source: buttonBackground
-        shadowEnabled: true
-        shadowBlur: (root.active || mouseArea.containsMouse) ? 0.2 : 0
-        shadowColor: Theme.colAccent
-        shadowVerticalOffset: 0
-        shadowHorizontalOffset: 0
-        
-        Behavior on shadowBlur { NumberAnimation { duration: 150 } }
-        Behavior on opacity { NumberAnimation { duration: 150 } }
-    }
 
     Rectangle {
         id: buttonBackground
@@ -42,16 +33,13 @@ Item {
         border.color: root.borderColor
         border.width: Config.data.borderSize
 
-        Behavior on color { ColorAnimation { duration: 150 } }
-        Behavior on border.color { ColorAnimation { duration: 150 } }
-
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 8
             anchors.rightMargin: 14
-            spacing: 16
+            spacing: 20
 
             StyledText {
                 text: root.icon
@@ -60,8 +48,6 @@ Item {
                 visible: root.icon !== ""
                 Layout.preferredWidth: 24 
                 horizontalAlignment: Text.AlignHCenter
-                
-                Behavior on color { ColorAnimation { duration: 150 } }
             }
 
             StyledText {
@@ -72,8 +58,6 @@ Item {
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
                 elide: Text.ElideRight
-                
-                Behavior on color { ColorAnimation { duration: 150 } }
             }
         }
 
@@ -82,6 +66,8 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: root.clicked()
+            onEntered: root.entered()
+            onExited: root.exited()
         }
     }
 }

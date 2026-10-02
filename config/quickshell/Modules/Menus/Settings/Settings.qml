@@ -2,6 +2,10 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
@@ -39,6 +43,10 @@ FloatingWindow {
         }
     }
 
+    ToolTip {
+        id: tooltip
+    }
+
     Rectangle {
         id: menuWindow
         anchors.fill: parent
@@ -57,7 +65,7 @@ FloatingWindow {
                 color: Theme.colBg
                 border.color: Theme.colAccent
                 border.width: Config.data.borderSize
-                Layout.preferredWidth: 203
+                Layout.preferredWidth: 60
                 Layout.fillHeight: true
                 radius: Config.data.rounding
 
@@ -66,40 +74,40 @@ FloatingWindow {
                     anchors.margins: 10
                     spacing: 10
 
-                    ScrollView {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        clip: true
-                        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                    ColumnLayout { 
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 5
 
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.topMargin: 10
-                            anchors.leftMargin: 2
-                            anchors.rightMargin: 2
-                            spacing: 10
+                        Repeater {
+                            model: [ 
+                                {icon: " ", text: "About"},
+                                {icon: " ", text: "Appearance"},
+                                {icon: " ", text: "Apps"},
+                                {icon: " ", text: "Audio"},
+                                {icon: " ", text: "Bluetooth"},
+                                {icon: "󰍹", text: "Displays"},
+                                {icon: "", text: "Keybinds"},
+                                {icon: "󰖩 ", text: "Network"},
+                                {icon: "󰒃 ", text: "Security"},
+                                {icon: "󰚰 ", text: "Updates"},
+                                {icon: "󰸉 ", text: "Wallpaper"}
+                            ]
 
-                            Repeater {
-                                model: [ 
-                                    {icon: "", text: "About"},
-                                    {icon: "", text: "Appearance"},
-                                    {icon: "", text: "Apps"},
-                                    {icon: "", text: "Audio"},
-                                    {icon: "", text: "Bluetooth"},
-                                    {icon: "󰍹", text: "Displays"},
-                                    {icon: "", text: "Keybinds"},
-                                    {icon: "󰖩", text: "Network"},
-                                    {icon: "󰒃", text: "Security"},
-                                    {icon: "󰚰", text: "Updates"},
-                                    {icon: "󰸉", text: "Wallpaper"},
-                                ]
+                            StyledButton {
+                                id: navBtn
+                                width: parent.width
+                                buttonWidth: 40
+                                icon: modelData.icon
+                                text: ""
+                                active: settingsMenu.activeIndex === index
+                                onClicked: settingsMenu.activeIndex = index
 
-                                StyledButtonLeftText {
-                                    width: parent.width
-                                    icon: modelData.icon
-                                    text: modelData.text
-                                    active: settingsMenu.activeIndex === index
-                                    onClicked: settingsMenu.activeIndex = index
+                                onEntered: {
+                                    tooltip.show(navBtn, modelData.text)
+                                }
+
+                                onExited: {
+                                    tooltip.hide()
                                 }
                             }
                         }
@@ -110,9 +118,20 @@ FloatingWindow {
                     }
 
                     StyledButtonLeftText {
+                        id: closeBtn
+                        width: parent.width
+                        buttonWidth: 40
                         icon: "" 
-                        text: "Close"
+                        text: ""
                         onClicked: settingsMenu.visible = false
+
+                        onEntered: {
+                            tooltip.show(closeBtn, "Close")
+                        }
+
+                        onExited: {
+                            tooltip.hide()
+                        }
                     }
                 }
             }
