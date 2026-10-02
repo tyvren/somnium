@@ -15,7 +15,7 @@ PopupWindow {
     anchor.rect.y: targetItem ? targetItem.height + 6 : 0
     width: tooltipLabel.implicitWidth + 16
     height: tooltipLabel.implicitHeight + 8
-    color: "transparent"
+    color: Theme.colBg 
     visible: false 
 
     function show(item, text) {
