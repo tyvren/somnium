@@ -66,6 +66,7 @@ ScrollView {
             columnSpacing: 60
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
+            Layout.margins: 10
 
             ColumnLayout {
                 spacing: 15
@@ -524,9 +525,10 @@ ScrollView {
 
         GridLayout {
             columns: 2
-            Layout.fillWidth: true
             rowSpacing: 10
             columnSpacing: 10
+            Layout.fillWidth: true
+            Layout.margins: 10
 
             Repeater {
                 model: [
@@ -562,9 +564,10 @@ ScrollView {
 
         GridLayout {
             columns: 2
-            Layout.fillWidth: true
             rowSpacing: 10
             columnSpacing: 10
+            Layout.fillWidth: true
+            Layout.margins: 10
 
             Repeater {
                 model: [
