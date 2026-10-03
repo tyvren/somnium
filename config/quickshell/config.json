@@ -7,7 +7,7 @@
     "blurEnabled": true,
     "blurPasses": 3,
     "blurSize": 3,
-    "borderSize": 1,
+    "borderSize": 0.8,
     "disableHyprlandLogo": true,
     "disableIdle": "I",
     "enableIdle": "I",
@@ -24,7 +24,7 @@
     "lockScreen": "L",
     "mainMod": "SUPER",
     "pseudo": "P",
-    "qsTransparency": 0.25,
+    "qsTransparency": 0,
     "rounding": 4,
     "screenshot": "Print",
     "shadowEnabled": true,
@@ -34,5 +34,6 @@
     "toggleFloating": "F",
     "toggleSplit": "J",
     "wallpaper": "",
-    "wallpaperDir": ""
+    "wallpaperDir": "",
+    "windowBorderSize": 1
 }

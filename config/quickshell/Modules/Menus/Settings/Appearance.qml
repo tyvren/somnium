@@ -31,7 +31,7 @@ ScrollView {
                 Quickshell.env("HOME") + "/.config/somnium/modules/quickshell/qs_apply_hyprland.sh",
                 Config.data.gapsIn.toString(),
                 Config.data.gapsOut.toString(),
-                Config.data.borderSize.toString(),
+                Config.data.windowBorderSize.toString(),
                 Config.data.rounding.toString(),
                 Config.data.activeOpacity.toString(),
                 Config.data.inactiveOpacity.toString(),
@@ -145,7 +145,38 @@ ScrollView {
                     Layout.fillWidth: true
 
                     StyledText {
-                        text: "Border Size"
+                        text: "Window Border Size"
+                        color: Theme.colText
+                        Layout.fillWidth: true
+                    }
+
+                    StyledSlider {
+                        inputValue: Config.data.windowBorderSize
+                        fromValue: 0
+                        toValue: 2
+                        stepSizeValue: 1
+                        onMoved: (val) => { Config.data.windowBorderSize = val; appearancePane.applyHypr(); }
+                    }
+
+                    Rectangle {
+                        id: windowBSizeTextContainer
+                        width: 20
+                        height: 10
+                        color: "transparent"
+                        Layout.leftMargin: 10
+
+                        StyledText {
+                            text: Config.data.windowBorderSize
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
+                  
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    StyledText {
+                        text: "Shell Border Size"
                         color: Theme.colText
                         Layout.fillWidth: true
                     }
@@ -154,12 +185,12 @@ ScrollView {
                         inputValue: Config.data.borderSize
                         fromValue: 0
                         toValue: 2
-                        stepSizeValue: 1
-                        onMoved: (val) => { Config.data.borderSize = val; appearancePane.applyHypr(); }
+                        stepSizeValue: 0.10
+                        onMoved: (val) => { Config.data.borderSize = val; }
                     }
 
                     Rectangle {
-                        id: borderSizeTextContainer
+                        id: shellBorderSizeTextContainer
                         width: 20
                         height: 10
                         color: "transparent"
