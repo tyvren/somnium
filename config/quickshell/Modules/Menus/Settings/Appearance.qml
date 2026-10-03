@@ -186,8 +186,8 @@ ScrollView {
                         inputValue: Config.data.borderSize
                         fromValue: 0
                         toValue: 2
-                        stepSizeValue: 0.10
-                        onMoved: (val) => { Config.data.borderSize = val; }
+                        stepSizeValue: 0.1
+                        onMoved: (val) => { Config.data.borderSize = Math.round(val * 10) / 10; }
                     }
 
                     Rectangle {
