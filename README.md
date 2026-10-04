@@ -82,7 +82,7 @@ Deployment
 Boot into your fresh Arch TTY or minimal environment and trigger the bootstrapper:
 Bash
 
-bash <(curl -sL [https://raw.githubusercontent.com/tyvren/somnium/main/boot.sh](https://raw.githubusercontent.com/tyvren/somnium/main/boot.sh))
+bash <(curl -sL https://raw.githubusercontent.com/tyvren/somnium/main/boot.sh)
 
     Enter your sudo elevation credentials when prompted.
 
