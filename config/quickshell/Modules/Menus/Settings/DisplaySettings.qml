@@ -198,6 +198,7 @@ ColumnLayout {
                     }
 
                     contentItem: StyledText {
+                        anchors.centerIn: parent
                         text: modeSelector.displayText
                         size: 11
                     }
