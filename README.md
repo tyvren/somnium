@@ -90,6 +90,6 @@ bash <(curl -sL [https://raw.githubusercontent.com/tyvren/somnium/main/boot.sh](
 
     Allow the wizard to finish building packages, then reboot into somnium.
 
-🎨 Theme Management
+Theme Management
 
 somnium includes custom modules for real-time runtime theme switching across Quickshell components, terminal emulators, and Hyprland accents. Color assets and QML schemes are loaded dynamically from the themes/ directory.
