@@ -57,30 +57,33 @@ somnium/
 ├── 📂 modules/                # Custom shell scripts and IPC utilities for Quickshell
 └── 📂 themes/                 # Swappable color profiles and assets
 
-    [!NOTE]
+[!NOTE]
 
-    Inspect core/packages.sh for a breakdown of all pacman and AUR dependencies installed by default.
+Inspect core/packages.sh for a breakdown of all pacman and AUR dependencies installed by default.
+
 
 Quickstart
 
-    [!WARNING]
+[!WARNING]
 
-    Clean Installs Recommended: The setup wizard automates package deployment and configuration symlinks. Apply with caution on pre-configured systems to avoid file conflicts.
+Clean Installs Recommended: The setup wizard automates package deployment and configuration symlinks. Apply with caution on pre-configured systems to avoid file conflicts.
+
 
 Prerequisites
 
 Ensure the following system services are enabled prior to execution:
 
-    multilib repository enabled in /etc/pacman.conf
+    multilib repository enabled
 
     pipewire (audio stack)
 
     NetworkManager (network stack)
 
+
+
 Deployment
 
 Boot into your fresh Arch TTY or minimal environment and trigger the bootstrapper:
-Bash
 
 bash <(curl -sL https://raw.githubusercontent.com/tyvren/somnium/main/boot.sh)
 
