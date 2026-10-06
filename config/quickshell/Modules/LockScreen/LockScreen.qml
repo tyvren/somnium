@@ -13,7 +13,7 @@ import qs.Themes
 
 WlSessionLock {
     id: root
-    locked: true
+    locked: false
 
     required property LockContext context
 
@@ -41,6 +41,9 @@ WlSessionLock {
                 source: wallpaper
                 brightness: -0.1
                 contrast: -0.1
+                blurEnabled: true
+                blur: 0.5
+                blurMax: 64
             }
 
             MultiEffect {
@@ -53,33 +56,52 @@ WlSessionLock {
                 shadowHorizontalOffset: 1
             }
 
+            Clock {
+                id: lockScreenClock
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.topMargin: 20
+                anchors.leftMargin: 20
+                textSize: 60
+                orientation: "horizontalFull"
+            }
+
             Rectangle {
                 id: dialogContainer
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 150
+                anchors.bottomMargin: parent.height * 0.15
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 440
-                height: 380
-                color: Theme.colBg
-                border.color: root.context.showFailure ? Theme.colHilight : Theme.colAccent
-                border.width: Config.data.borderSize
+                height: parent.height * 0.35
+                width: parent.width * 0.25
+                color: "transparent"
                 radius: Config.data.rounding
 
                 ColumnLayout {
                     anchors.fill: parent
-                    anchors.margins: 30
-                    spacing: 16
+                    spacing: 20
 
-                    Clock {
-                        id: lockScreenClock
+                    StyledClippingRect {
+                        id: userIconBox
+                        Layout.preferredWidth: 100
+                        Layout.preferredHeight: 100
                         Layout.alignment: Qt.AlignHCenter
-                        textSize: 40
-                        orientation: "horizontal"
+                        border.color: Theme.colAccent
+                        radius: Config.data.rounding
+ 
+                        Image {
+                            id: userIcon
+                            anchors.fill: parent
+                            source: Quickshell.env("HOME") + "/.face"
+                            asynchronous: true
+                            fillMode: Image.PreserveAspectCrop
+                            sourceSize.width: 1920
+                            sourceSize.height: 1080
+                        }
                     }
 
                     StyledInput {
                         id: passwordBox
-                        Layout.fillWidth: true
+                        Layout.preferredWidth: 300
                         Layout.preferredHeight: 45
                         Layout.alignment: Qt.AlignHCenter
                         echoMode: TextInput.Password
@@ -99,16 +121,17 @@ WlSessionLock {
                     }
 
                     RowLayout {
+                        Layout.alignment: Qt.AlignHCenter
                         Layout.fillWidth: true
                         spacing: 12
 
                         StyledButton {
                             id: unlockButton
                             focusPolicy: Qt.NoFocus
-                            text: "Unlock"
                             icon: "󰌾"
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
+                            iconSize: 18
+                            Layout.preferredWidth: 160
+                            Layout.preferredHeight: 45
 
                             enabled: root.context.currentText !== ""
                             onClicked: root.context.tryUnlock()
@@ -118,8 +141,9 @@ WlSessionLock {
                             id: fingerprintButton
                             focus: true
                             icon: "󰈷"
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 40
+                            iconSize: 18
+                            Layout.preferredWidth: 45
+                            Layout.preferredHeight: 45
 
                             onActiveFocusChanged: root.context.tryFingerprintUnlock()
                             onClicked: root.context.tryFingerprintUnlock()
@@ -127,27 +151,34 @@ WlSessionLock {
                     }
 
                     DividerLine {
-                        Layout.fillWidth: true
+                        Layout.preferredWidth: parent.width * 0.5
                         Layout.alignment: Qt.AlignHCenter
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: 12
+                        Layout.alignment: Qt.AlignHCenter
+                        spacing: 50
 
                         StyledButton {
-                            text: "Restart"
+                            Layout.preferredWidth: 45
+                            Layout.preferredHeight: 45
+                            text: ""
                             icon: "󰜉"
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
+                            iconSize: 24
+                            color: "transparent"
+                            borderColor: "transparent"
                             onClicked: restartProcess.startDetached()
                         }
 
                         StyledButton {
-                            text: "Shutdown"
+                            Layout.preferredWidth: 45
+                            Layout.preferredHeight: 45
+                            text: ""
                             icon: "󰐥"
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
+                            iconSize: 24
+                            color: "transparent"
+                            borderColor: "transparent"
                             onClicked: shutdownProcess.startDetached()
                         }
                     }
