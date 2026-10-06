@@ -69,7 +69,7 @@ WlSessionLock {
             Rectangle {
                 id: dialogContainer
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.25
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: parent.height * 0.35
                 width: parent.width * 0.25
