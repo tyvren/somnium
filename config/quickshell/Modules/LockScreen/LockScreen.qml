@@ -60,9 +60,9 @@ WlSessionLock {
                 id: lockScreenClock
                 anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.topMargin: 20
-                anchors.leftMargin: 20
-                textSize: 60
+                anchors.topMargin: 40
+                anchors.leftMargin: 40
+                textSize: 40
                 orientation: "horizontalFull"
             }
 
@@ -82,8 +82,8 @@ WlSessionLock {
 
                     StyledClippingRect {
                         id: userIconBox
-                        Layout.preferredWidth: 100
-                        Layout.preferredHeight: 100
+                        Layout.preferredWidth: 120
+                        Layout.preferredHeight: 120
                         Layout.alignment: Qt.AlignHCenter
                         border.color: Theme.colAccent
                         radius: Config.data.rounding
@@ -102,11 +102,11 @@ WlSessionLock {
                     StyledInput {
                         id: passwordBox
                         Layout.preferredWidth: 300
-                        Layout.preferredHeight: 45
+                        Layout.preferredHeight: 35
                         Layout.alignment: Qt.AlignHCenter
                         echoMode: TextInput.Password
                         placeholderText: "Enter password"
-                        placeholderTextColor: Theme.colMuted
+                        placeholderTextColor: Qt.alpha(Theme.colBg, 0.50)
                         font.pointSize: 14
                         inputMethodHints: Qt.ImhSensitiveData
                         text: root.context.currentText
@@ -129,9 +129,9 @@ WlSessionLock {
                             id: unlockButton
                             focusPolicy: Qt.NoFocus
                             icon: "󰌾"
-                            iconSize: 18
-                            Layout.preferredWidth: 160
-                            Layout.preferredHeight: 45
+                            iconSize: 16
+                            Layout.preferredWidth: 105
+                            Layout.preferredHeight: 35
 
                             enabled: root.context.currentText !== ""
                             onClicked: root.context.tryUnlock()
@@ -141,9 +141,9 @@ WlSessionLock {
                             id: fingerprintButton
                             focus: true
                             icon: "󰈷"
-                            iconSize: 18
-                            Layout.preferredWidth: 45
-                            Layout.preferredHeight: 45
+                            iconSize: 16
+                            Layout.preferredWidth: 35
+                            Layout.preferredHeight: 35
 
                             onActiveFocusChanged: root.context.tryFingerprintUnlock()
                             onClicked: root.context.tryFingerprintUnlock()
