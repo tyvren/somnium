@@ -80,9 +80,6 @@ enable_plymouth
 log_step "Setting up quickconfig bash alias"
 setup_quickconfig_alias
 
-log_step "Configuring Hyprland login settings"
-hyprland_autologin
-
 log_success "Somnium installation complete!"
 log_info "Please reboot for all changes to take effect."
 
