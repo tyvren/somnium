@@ -31,6 +31,7 @@ system_utils=(
   vlc
   vlc-plugins-all
   fwupd
+  greetd
 )
 
 development=(
@@ -50,6 +51,7 @@ files_disk_management=(
   nfs-utils
   gvfs
   gvfs-smb
+  partitionmanager
 )
 
 network_bluetooth=(
