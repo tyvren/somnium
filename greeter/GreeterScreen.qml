@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.Greetd
 import Quickshell.Widgets
 import Quickshell.Wayland
 
@@ -12,8 +13,6 @@ PanelWindow {
     anchors.bottom: true
     anchors.left: true
     anchors.right: true
-    exclusionMode: ExclusionMode.Ignore
-    title: "Somnium Greeter"
     color: root.colBg
 
     WlrLayershell.layer: WlrLayer.Top
