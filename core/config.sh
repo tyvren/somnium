@@ -30,7 +30,7 @@ setup_greetd() {
   sudo mkdir -p /etc/greetd
 
   log_info "Setting up greeter files..."
-  sudo mkdir "/usr/local/share/somnium"
+  sudo mkdir -p /usr/local/share/somnium
   sudo cp -r "$INSTALL_DIR/greeter" "/usr/local/share/somnium"
 
   cat <<'EOF' | sudo tee /etc/greetd/config.toml >/dev/null
