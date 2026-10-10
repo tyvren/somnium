@@ -28,7 +28,7 @@ ScrollView {
 
         function applyHypr() {
             Quickshell.execDetached([
-                Quickshell.env("HOME") + "/.config/somnium/modules/quickshell/qs_apply_hyprland.sh",
+                Config.installDir + "/modules/quickshell/qs_apply_hyprland.sh",
                 Config.data.gapsIn.toString(),
                 Config.data.gapsOut.toString(),
                 Config.data.windowBorderSize.toString(),

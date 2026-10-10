@@ -7,6 +7,7 @@ default_packages=(
   obs-studio
   gnome-boxes
   obsidian
+  lutris
 )
 
 system_utils=(
@@ -32,10 +33,6 @@ system_utils=(
   vlc-plugins-all
   fwupd
   greetd
-)
-
-development=(
-  neovim
 )
 
 files_disk_management=(
@@ -64,6 +61,7 @@ network_bluetooth=(
 
 terminal_shell=(
   ghostty
+  neovim
   fastfetch
   btop
   cava

@@ -3,12 +3,12 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.Services
 
 Singleton {
     id: root
 
-    readonly property string homeDir: Quickshell.env("HOME")
-    readonly property string scriptPath: homeDir + "/.config/somnium/modules/quickshell"
+    readonly property string scriptPath: Config.installDir + "/modules/quickshell"
 
     readonly property real cpuUsage: _cpuUsage
     readonly property real ramUsage: _ramUsage

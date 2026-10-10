@@ -48,14 +48,14 @@ ColumnLayout {
             text: "Install Arch App"
             Layout.fillWidth: true
             Layout.preferredHeight: 45
-            onClicked: Quickshell.execDetached(["sh", "-c", "ghostty -e ~/.config/somnium/modules/packages/pkg_install.sh"])
+            onClicked: Quickshell.execDetached(["sh", "-c", "ghostty -e " + Config.installDir + "/modules/packages/pkg_install.sh"])
         }
 
         StyledButton {
             text: "Install AUR App"
             Layout.fillWidth: true
             Layout.preferredHeight: 45
-            onClicked: Quickshell.execDetached(["sh", "-c", "ghostty -e ~/.config/somnium/modules/packages/pkg_aur_install.sh"])
+            onClicked: Quickshell.execDetached(["sh", "-c", "ghostty -e " + Config.installDir + "/modules/packages/pkg_aur_install.sh"])
         }
     }
 

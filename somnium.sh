@@ -9,9 +9,6 @@ install_gum
 create_log
 header
 
-log_step "Getting username"
-get_username
-
 log_step "Updating system packages"
 spinner "Updating system..." sudo pacman -Syu --noconfirm
 
@@ -42,13 +39,8 @@ enable_iwd
 log_step "Installing desktop environment packages"
 install_packages "${desktop_environment[@]}"
 
-log_step "Installing development tools"
-install_packages "${development[@]}"
-
 log_step "Installing terminal emulator and shell tools"
 install_packages "${terminal_shell[@]}"
-
-log_step "Installing LazyVim"
 install_lazyvim
 
 log_step "Installing theme icons, cursors and fonts"
@@ -71,11 +63,20 @@ enable_service "power-profiles-daemon.service"
 
 log_step "Enabling user services"
 enable_user_service "app-com.mitchellh.ghostty.service"
-enable_user_service "hypridle"
-enable_user_service "hyprpolkitagent"
+enable_user_service "hypridle.service"
+enable_user_service "hyprpolkitagent.service"
 
 log_step "Setting up somnium bootloader logo"
 enable_plymouth
+
+log_step "Setting up somnium greeter"
+setup_greetd
+
+log_step "Setting up limine"
+setup_limine
+
+log_step "Enabling greetd display manager"
+spinner "Enabling greetd" sudo systemctl enable greetd.service
 
 log_step "Setting up quickconfig bash alias"
 setup_quickconfig_alias

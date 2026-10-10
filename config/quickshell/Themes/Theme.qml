@@ -1,8 +1,8 @@
 pragma Singleton
 
-import qs.Services
 import QtQuick
 import Quickshell
+import qs.Services
 
 QtObject {
     id: theme
@@ -111,8 +111,8 @@ QtObject {
         }
             
         let folder = activeId.charAt(0).toUpperCase() + activeId.slice(1)
-        return "file://" + Quickshell.env("HOME") + "/.config/somnium/wallpapers/" + folder + "/" + active.wall
+        return "file://" + Config.installDir + "/wallpapers/" + folder + "/" + active.wall
     }
 
-    readonly property url logoPath: Quickshell.env("HOME") + "/.config/somnium/config/quickshell/Assets/" + active.logo
+    readonly property url logoPath: Config.installDir + "/config/quickshell/Assets/" + active.logo
 }

@@ -8,8 +8,9 @@ Singleton {
     id: root
 
     readonly property string homeDir: Quickshell.env("HOME")
-    readonly property string scriptPath: homeDir + "/.config/somnium/modules/quickshell"
-    readonly property string themeScript: homeDir + "/.config/somnium/modules/style"
+    readonly property string installDir: homeDir + "/.config/somnium"
+    readonly property string scriptPath: installDir + "/modules/quickshell"
+    readonly property string themeScript: installDir + "/modules/style"
     readonly property string configPath: Quickshell.shellDir + "/config.json"
     readonly property alias data: adapter
 

@@ -4,12 +4,13 @@ import Quickshell
 import Quickshell.Io
 import qs.Components
 import qs.Themes
+import qs.Services
 
 ColumnLayout {
     id: securityPane
     spacing: 10
 
-    property string scriptDir: Quickshell.env("HOME") + "/.config/somnium/modules/security/"
+    property string scriptDir: Config.installDir + "/modules/security/"
 
     StyledText {
         text: "System Security"

@@ -21,7 +21,7 @@ ColumnLayout {
     property var wallpaperList: []
 
     readonly property string folderName: Theme.activeId.charAt(0).toUpperCase() + Theme.activeId.slice(1)
-    property string themeWallpaperDir: Quickshell.env("HOME") + "/.config/somnium/wallpapers/" + folderName
+    property string themeWallpaperDir: Config.installDir + "/wallpapers/" + folderName
     property var themeWallpaperList: []
 
     Process {
@@ -235,7 +235,7 @@ ColumnLayout {
                     onClicked: {
                         Config.updateWallpaper(modelData);
                         Quickshell.execDetached([
-                            Quickshell.env("HOME") + "/.config/somnium/modules/style/wallpaper_changer.sh",
+                            Config.installDir + "/modules/style/wallpaper_changer.sh",
                             modelData
                         ]);
                     }

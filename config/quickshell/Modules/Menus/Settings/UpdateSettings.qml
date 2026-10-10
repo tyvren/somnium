@@ -4,12 +4,13 @@ import Quickshell
 import Quickshell.Io
 import qs.Components
 import qs.Themes
+import qs.Services
 
 ColumnLayout {
     id: updatePane
     spacing: 10
 
-    property string scriptDir: Quickshell.env("HOME") + "/.config/somnium/modules/updates/"
+    property string scriptDir: Config.installDir + "/modules/updates/"
 
     StyledText {
         text: "Updates"
