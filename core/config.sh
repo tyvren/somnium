@@ -57,7 +57,7 @@ hl.config({
 })
 
 hl.on("hyprland.start", function()
-  hl.exec_cmd("qs -p /usr/local/share/somnium/greeter/greeter.qml")
+  hl.exec_cmd("qs -p /usr/local/share/somnium/greeter/greeter.qml; hyprctl dispatch 'hl.dsp.exit()'")
 end)
 EOF
 
