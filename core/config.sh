@@ -1,15 +1,18 @@
 INSTALL_DIR="$HOME/.config/somnium"
 
 config_setup() {
-  log_info "Copying Somnium theme files..."
+  log_info "Copying Somnium theme files"
   cp -r "$INSTALL_DIR/themes/Somnium/." "$HOME/.config/"
 
-  log_info "Copying config files..."
+  log_info "Copying config files"
   cp -r "$INSTALL_DIR/config/"* "$HOME/.config/"
 
-  log_info "Cloning wallpapers repo..."
+  log_info "Copying default user icon"
+  cp "$INSTALL_DIR/config/quickshell/Assets/spiral_somnium.png" "$HOME/.face"
+
+  log_info "Cloning wallpapers repo"
   git clone --depth 1 https://github.com/tyvren/somnium-wallpapers.git /tmp/wallpapers
-  log_info "Copying wallpapers..."
+  log_info "Copying wallpapers"
   rm -rf /tmp/wallpapers/.git
   rm -rf /tmp/wallpapers/README.md
   cp -r /tmp/wallpapers/. "$INSTALL_DIR/wallpapers/"
@@ -26,10 +29,10 @@ config_setup() {
 }
 
 setup_greetd() {
-  log_info "Setting up greetd configuration..."
+  log_info "Setting up greetd configuration"
   sudo mkdir -p /etc/greetd
 
-  log_info "Setting up greeter files..."
+  log_info "Setting up greeter files"
   sudo mkdir -p /usr/local/share/somnium
   sudo cp -r "$INSTALL_DIR/greeter" "/usr/local/share/somnium"
 
