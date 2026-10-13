@@ -84,7 +84,7 @@ FloatingWindow {
                                 {icon: " ", text: "Appearance"},
                                 {icon: " ", text: "Apps"},
                                 {icon: " ", text: "Audio"},
-                                {icon: " ", text: "Bluetooth"},
+                                {icon: "", text: "Bluetooth"},
                                 {icon: "󰍹", text: "Displays"},
                                 {icon: "", text: "Keybinds"},
                                 {icon: "󰖩 ", text: "Network"},

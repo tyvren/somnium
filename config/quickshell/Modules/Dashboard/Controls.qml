@@ -11,7 +11,7 @@ ColumnLayout {
     spacing: 5
 
     StyledText {
-        text: "Display Brightness"
+        text: "Display"
         Layout.leftMargin: 60
         size: 12
     }
@@ -72,7 +72,7 @@ ColumnLayout {
     }
 
     StyledText {
-        text: "Keyboard Backlight"
+        text: "Keyboard"
         Layout.leftMargin: 60
         size: 12
     }

@@ -8,8 +8,8 @@ import qs.Themes
 
 Item {
     id: root
-    implicitWidth: 480
-    implicitHeight: 28
+    implicitWidth: 580
+    implicitHeight: 30
 
     property bool shouldShowOsd: false
     property string currentSummary: ""
@@ -54,7 +54,6 @@ Item {
             text: root.currentSummary
             bold: true
             elide: Text.ElideRight
-            maximumLineCount: 1
             wrapMode: Text.Wrap
         }
 

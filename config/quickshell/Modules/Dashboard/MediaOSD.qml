@@ -10,12 +10,10 @@ import qs.Themes
 
 Item {
     id: root
-    implicitWidth: 480
-    implicitHeight: 28
 
-    property int btnTextSize: 10
-    property int artistTextSize: 10
-    property int titleTextSize: 10
+    property int btnTextSize: 11
+    property int artistTextSize: 11
+    property int titleTextSize: 11
     property int albumWidth: 20
     property int albumHeight: 20
 
@@ -46,9 +44,8 @@ Item {
     ClippingRectangle {
         id: bgImageContainer
         anchors.fill: parent 
-        anchors.margins: 2
         opacity: 0.2
-        radius: 2
+        radius: Config.data.rounding
         color: "transparent"
 
         Image {
@@ -83,7 +80,7 @@ Item {
         Clock {
             id: mediaClock
             orientation: "horizontal"
-            textSize: 13
+            textSize: 15
             Layout.leftMargin: 20
             Layout.rightMargin: 20
         }

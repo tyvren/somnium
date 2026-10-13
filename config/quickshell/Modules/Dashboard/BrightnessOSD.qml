@@ -10,7 +10,7 @@ import qs.Services
 Item {
     id: root
     implicitWidth: 480
-    implicitHeight: 28
+    implicitHeight: 30
 
     function requestShow(customInterval) {
         if (!States.dashboardOpen) {

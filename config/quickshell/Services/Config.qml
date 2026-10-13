@@ -34,6 +34,7 @@ Singleton {
             property string wallpaperDir: ""
 
             property string barLayout: "top"
+            property bool sideBarsEnabled: true
             property int barMargin: 10
 
             property int gapsIn: 4

@@ -24,24 +24,9 @@ RowLayout {
                 id: icon
                 implicitWidth: 9
                 implicitHeight: 9
-                color: isActive ? Theme.colBg : (ws ? Theme.colMuted : "transparent")
+                color: isActive ? "transparent" : (ws ? Theme.colAccent : "transparent")
                 border.color: isActive ? Theme.colAccent : (ws ? Theme.colMuted : "transparent") 
                 layer.enabled: true
-                visible: false
-            }
-
-            Image {
-                id: workspaceLogo
-                width: 25
-                height: 25
-                y: -3
-                x: -5
-                source: Theme.logoPath
-                mipmap: true
-                asynchronous: true
-                fillMode: Image.PreserveAspectFit
-                layer.enabled: true
-                visible: false
             }
 
             MultiEffect {
@@ -49,7 +34,7 @@ RowLayout {
                 source: icon
                 shadowEnabled: true
                 shadowBlur: 0.2
-                shadowOpacity: 0.7
+                shadowOpacity: 0.8
             }
 
             MouseArea {

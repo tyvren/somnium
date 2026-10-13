@@ -28,12 +28,13 @@
     "rounding": 4,
     "screenshot": "Print",
     "shadowEnabled": true,
+    "sideBarsEnabled": true,
     "sysMonitor": "false",
     "terminal": "RETURN",
     "theme": "somnium",
     "toggleFloating": "F",
     "toggleSplit": "J",
-    "wallpaper": "",
-    "wallpaperDir": "",
+    "wallpaper": "/home/tyvren/.config/somnium/wallpapers/Somnium/somnium.png",
+    "wallpaperDir": "file:///home/tyvren/Pictures/Wallpapers",
     "windowBorderSize": 1
 }

@@ -7,12 +7,13 @@ import qs.Services
 
 RowLayout {
     id: mainMenuRoot
-    spacing: 15
+    spacing: 20
 
     StyledButton {
           icon: ""
           Layout.preferredWidth: 10
           Layout.preferredHeight: 10
+          color: "transparent"
           onClicked: {
               settingsProcess.startDetached()
           }
@@ -22,8 +23,19 @@ RowLayout {
           icon: "󰌾"
           Layout.preferredWidth: 10
           Layout.preferredHeight: 10
+          color: "transparent"
           onClicked: {
               lockProcess.startDetached()
+          }
+    }
+
+    StyledButton {
+          icon: "󰍃"
+          Layout.preferredWidth: 10
+          Layout.preferredHeight: 10
+          color: "transparent"
+          onClicked: {
+              logoutProcess.startDetached()
           }
     }
 
@@ -31,6 +43,7 @@ RowLayout {
         icon: "󰜉"
         Layout.preferredWidth: 10
         Layout.preferredHeight: 10
+        color: "transparent"
         onClicked: {
             restartProcess.startDetached()
         }
@@ -46,6 +59,7 @@ RowLayout {
     }
 
     Process { id: lockProcess; command: ["sh", "-c", "qs ipc call lockscreen lock"] }
+    Process { id: logoutProcess; command: ["hyprctl", "dispatch", "exit"] }
     Process { id: restartProcess; command: ["systemctl", "reboot"] }
     Process { id: shutdownProcess; command: ["systemctl", "poweroff"] }
     Process { id: settingsProcess; command: ["sh", "-c", "qs ipc call settingsMenu toggle"] }

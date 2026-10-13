@@ -533,7 +533,7 @@ ScrollView {
             Repeater {
                 model: [
                     { name: "Top Bar", value: "top", icon: "󱔓" },
-                    { name: "Bottom Bar", value: "bottom", icon: "󱂩" }
+                    { name: "Bottom Bar", value: "bottom", icon: "󱂩" },
                 ]
 
                 StyledButton {
@@ -550,6 +550,22 @@ ScrollView {
                 }
             }
         }
+
+        RowLayout {
+            Layout.fillWidth: true
+
+            StyledText {
+                text: "Sidebars"
+                color: Theme.colAccent
+                size: 12
+                Layout.fillWidth: true
+            }
+
+            StyledSwitch {
+                checked: Config.data.sideBarsEnabled
+                    onToggled: Config.data.sideBarsEnabled = checked
+                }
+            }
 
         DividerLine {
             Layout.fillWidth: true

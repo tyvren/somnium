@@ -20,43 +20,40 @@ Scope {
                 id: bar
                 required property var modelData
                 screen: modelData
+                color: "transparent"
+                implicitHeight: 30
 
                 property bool monitorFocused: Hyprland.focusedMonitor && Hyprland.focusedMonitor.name === screen.name
 
-                color: "transparent"
-                implicitHeight: 32
                 anchors {
-                    top: Config.data.barLayout === "top" ? true : false
-                    bottom: Config.data.barLayout === "bottom" ? true : false
+                    top: Config.data.barLayout === "top" 
+                    bottom: Config.data.barLayout === "bottom"
                     left: true
                     right: true
                 }
-                margins.top: Config.data.barLayout === "top" ? 2 : 0
-                margins.bottom: Config.data.barLayout === "bottom" ? 2 : 0
+
                 margins.left: 2
                 margins.right: 2
 
                 Rectangle {
                     id: leftBar
-                    width: bar.width / 2 - 250
+                    width: bar.width / 2 - 350
                     height: bar.height - 2
                     anchors.verticalCenter: parent.verticalCenter
                     radius: Config.data.rounding
-                    color: Theme.colBg
-                    border.color: Theme.colAccent
-                    border.width: Config.data.borderSize 
+                    color: "transparent"
+                    border.color: "transparent" 
                 }
 
                 Rectangle {
                     id: rightBar
-                    x: bar.width / 2 + 250
-                    width: bar.width / 2 - 250
+                    x: bar.width / 2 + 350
+                    width: bar.width / 2 - 350
                     height: bar.height - 2
                     anchors.verticalCenter: parent.verticalCenter
                     radius: Config.data.rounding
-                    color: Theme.colBg
-                    border.color: Theme.colAccent
-                    border.width: Config.data.borderSize
+                    color: "transparent" 
+                    border.color: "transparent" 
                 }
 
                 Item {
@@ -107,7 +104,7 @@ Scope {
                     Workspaces {
                         id: workspacesButtonTop
                         anchors.left: parent.left
-                        anchors.leftMargin: (States.mainMenuOpen && bar.monitorFocused) ? 170 : 60
+                        anchors.leftMargin: (States.mainMenuOpen && bar.monitorFocused) ? 210 : 60
                         anchors.verticalCenter: parent.verticalCenter
 
                         Behavior on anchors.leftMargin {

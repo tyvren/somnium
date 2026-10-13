@@ -17,15 +17,14 @@ RowLayout {
       Layout.alignment: Qt.AlignHCenter
 
         StyledText {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-            Layout.leftMargin: 60
+            Layout.alignment: Qt.AlignHCenter
             text: grid.today.toLocaleDateString(grid.locale, "MMMM yyyy")
             size: 14
         }
 
         DayOfWeekRow {
             locale: grid.locale
-            Layout.preferredWidth: 240
+            Layout.preferredWidth: 350
             delegate: StyledText {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -39,7 +38,7 @@ RowLayout {
             month: today.getMonth()
             year: today.getFullYear()
             locale: Qt.locale("en_US")
-            Layout.preferredWidth: 240
+            Layout.preferredWidth: 350
             Layout.fillHeight: true
             delegate: Rectangle {
                 required property var model

@@ -9,7 +9,8 @@ import qs.Services
 
 Item {
     id: root
-    anchors.fill: parent
+    implicitWidth: 480
+    implicitHeight: 30
 
     function requestShow(customInterval) {
         if (!States.dashboardOpen) {

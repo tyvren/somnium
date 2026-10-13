@@ -7,6 +7,7 @@ import qs.Modules.Menus.Settings
 
 ShellRoot {
     Bar {}
+    SideBars {}
     Dashboard {}
     Launcher {}
     LockContext {
