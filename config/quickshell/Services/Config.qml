@@ -41,10 +41,10 @@ Singleton {
             property int gapsOut: 10
             property real borderSize: 0.8
             property int windowBorderSize: 1
-            property int rounding: 2
+            property int rounding: 6
             property real activeOpacity: 1.0
             property real inactiveOpacity: 0.8
-            property real qsTransparency: 0.25
+            property real qsTransparency: 0.0
             property bool allowTearing: false
             property bool shadowEnabled: true
             property bool blurEnabled: true
