@@ -12,8 +12,8 @@ ShellRoot {
     LockContext {
         id: lockContext
         onLockRequested: lockScreen.locked = true
-        onUnlocked: lockScreen.locked = false
     }
+
     LockScreen {
         id: lockScreen
         context: lockContext
