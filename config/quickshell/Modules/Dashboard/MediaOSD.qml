@@ -85,6 +85,11 @@ Item {
             textSize: 15
             Layout.leftMargin: 20
             Layout.rightMargin: 20
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: States.dashboardOpen = true
+            }
         }
 
         Item {
