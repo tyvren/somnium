@@ -4,11 +4,10 @@ import qs.Modules.Bar
 import qs.Modules.Dashboard
 import qs.Modules.LockScreen
 import qs.Modules.Menus.Settings
+import qs.Modules.Shell
 
 ShellRoot {
-    Bar {}
-    SideBars {}
-    Dashboard {}
+    Shell {}
     Launcher {}
     LockContext {
         id: lockContext
