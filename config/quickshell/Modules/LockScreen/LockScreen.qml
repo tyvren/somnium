@@ -101,46 +101,34 @@ WlSessionLock {
                 color: Theme.colBg
             }
 
-            Image {
-                id: wallpaper
+            Item {
+                id: wallpaperBackground
                 anchors.fill: parent
-                source: Theme.wallpaperPath
-                mipmap: true
-                asynchronous: true
-                fillMode: Image.PreserveAspectCrop
-                scale: scene.introComplete ? 1.04 : 1.12
-                opacity: scene.introComplete ? 0.72 : 0.25
+                clip: true
 
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: 1000
-                        easing.type: Easing.OutCubic
-                    }
+                Image {
+                    id: wallpaper
+                    anchors.fill: parent
+                    anchors.margins: -80
+                    source: Theme.wallpaperPath
+                    mipmap: true
+                    asynchronous: true
+                    fillMode: Image.PreserveAspectCrop
+                    smooth: true
                 }
 
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 500
-                        easing.type: Easing.OutCubic
-                    }
+                MultiEffect {
+                    anchors.fill: parent
+                    anchors.margins: -80
+                    source: wallpaper
+                    blurEnabled: true
+                    blur: 0.8
+                    blurMax: 64
                 }
-            }
 
-            MultiEffect {
-                anchors.fill: wallpaper
-                source: wallpaper
-                brightness: -0.2
-                contrast: -0.08
-                saturation: -0.2
-                blurEnabled: true
-                blur: scene.introComplete ? 0.48 : 0.7
-                blurMax: 64
-
-                Behavior on blur {
-                    NumberAnimation {
-                        duration: 650
-                        easing.type: Easing.OutCubic
-                    }
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#55000000"
                 }
             }
 
