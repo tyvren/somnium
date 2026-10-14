@@ -13,8 +13,8 @@ PopupWindow {
     anchor.item: targetItem
     anchor.rect.x: targetItem ? (targetItem.width - width) / 2 : 0
     anchor.rect.y: targetItem ? targetItem.height + 6 : 0
-    width: tooltipLabel.implicitWidth + 16
-    height: tooltipLabel.implicitHeight + 8
+    implicitWidth: tooltipLabel.implicitWidth + 16
+    implicitHeight: tooltipLabel.implicitHeight + 8
     color: Theme.colBg 
     visible: false 
 
