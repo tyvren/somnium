@@ -10,6 +10,8 @@ import qs.Themes
 
 Item {
     id: root
+    width: 400
+    height: 30
 
     property int btnTextSize: 11
     property int artistTextSize: 11
