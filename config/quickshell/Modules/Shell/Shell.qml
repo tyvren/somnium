@@ -423,7 +423,7 @@ Scope {
                     }
 
                     MediaOSD {
-                        anchors.fill: parent
+                        anchors.horizontalCenter: parent.horizontalCenter
                         opacity: !States.dashboardOpen && States.mediaPlayerOpen ? 1 : 0
                         visible: opacity > 0 && frameWindow.monitorFocused
 
