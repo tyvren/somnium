@@ -95,11 +95,17 @@ Scope {
                 readonly property int dashboardClosedHeight: 30
                 readonly property int sidebarExpandedWidth: 220
                 readonly property int sidebarShoulderLength: 40
-                readonly property int dashboardContentWidth: 1000
                 readonly property int dashboardFlare: 50
                 readonly property int dashboardCompactHeight: 300
                 readonly property int dashboardOpenHeight: 400
                 readonly property int osdFadeDuration: 350
+
+                readonly property int dashboardClosedWidth: 1000
+                readonly property int dashboardHomeWidth: 600
+                readonly property int dashboardAudioWidth: 600
+                readonly property int dashboardBluetoothWidth: 600
+                readonly property int dashboardLauncherWidth: 600
+                readonly property int dashboardNetworkWidth: 600
 
                 property bool leftSidebarOpen: false
                 property bool rightSidebarOpen: false
@@ -109,6 +115,20 @@ Scope {
                 readonly property bool dashboardShown: States.dashboardOpen && monitorFocused
                 readonly property real borderWidth: Config.data.borderSize || 1
                 readonly property real sidebarRestWidth: Config.data.sideBarsEnabled ? sidebarClosedWidth : rimThickness
+
+                readonly property real dashboardTargetWidth: {
+                    if (!dashboardShown)
+                        return dashboardClosedWidth
+                    switch (States.currentView) {
+                        case "audio": return dashboardAudioWidth
+                        case "bluetooth": return dashboardBluetoothWidth
+                        case "launcher": return dashboardLauncherWidth
+                        case "network": return dashboardNetworkWidth
+                        default: return dashboardHomeWidth
+                    }
+                }
+
+                property real dashboardContentWidth: dashboardTargetWidth
 
                 readonly property real dashboardWidth: dashboardContentWidth + dashboardFlare * 2
                 readonly property real dashboardLeft: (width - dashboardWidth) / 2
@@ -130,6 +150,14 @@ Scope {
 
                 readonly property string innerContourPath: buildInnerContourPath()
                 readonly property string filledFramePath: moveTo(0, 0) + lineTo(0, height) + lineTo(width, height) + lineTo(width, 0) + "Z " + innerContourPath
+
+                Behavior on dashboardContentWidth {
+                    NumberAnimation {
+                        duration: 600
+                        easing.type: Easing.OutBack
+                        easing.overshoot: 0.5
+                    }
+                }
 
                 Behavior on dashboardHeight {
                     NumberAnimation {
