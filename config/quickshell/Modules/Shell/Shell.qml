@@ -597,7 +597,7 @@ Scope {
                     Column {
                         id: leftSidebarTools
                         anchors.top: parent.top
-                        anchors.topMargin: 100
+                        anchors.topMargin: 200
                         anchors.left: parent.left
                         anchors.leftMargin: 30
                         width: Math.max(0, leftSidebar.width - 62)
@@ -661,7 +661,7 @@ Scope {
                     Column {
                         id: leftSidebarSystem
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 100
+                        anchors.bottomMargin: 200
                         anchors.left: parent.left
                         anchors.leftMargin: 30
                         width: Math.max(0, leftSidebar.width - 62)
@@ -840,7 +840,7 @@ Scope {
                     Column {
                         id: rightSidebarTools
                         anchors.top: parent.top
-                        anchors.topMargin: 100
+                        anchors.topMargin: 200
                         anchors.right: parent.right
                         anchors.rightMargin: 30
                         width: Math.max(0, rightSidebar.width - 62)
