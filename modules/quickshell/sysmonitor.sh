@@ -2,6 +2,8 @@
 
 export LC_ALL=C
 
+gpu_choice="${1:-auto}"
+
 rapl_file=""
 for zone in /sys/class/powercap/intel-rapl:[0-9]; do
   case "$(cat "$zone/name" 2>/dev/null)" in
@@ -67,6 +69,10 @@ disk=$(df -B1 --output=used,size / | tail -n1 | awk '{
     printf "disk=%.1f\ndisk_used=%.1f\ndisk_total=%.1f\n", ($2 > 0) ? $1 * 100 / $2 : 0, $1 / 1073741824, $2 / 1073741824
 }')
 
+device_asleep() {
+  [ "$(cat "$1/power/runtime_status" 2>/dev/null)" = "suspended" ]
+}
+
 gpu_available=0
 gpu=0
 gpu_temp=0
@@ -74,14 +80,26 @@ gpu_power=0
 vram=0
 vram_used=0
 vram_total=0
+best_vram_total=-1
 
 for dev in /sys/class/drm/card?/device; do
   [ "$(cat "$dev/vendor" 2>/dev/null)" = "0x1002" ] || continue
   [ -r "$dev/gpu_busy_percent" ] || continue
-  gpu_available=1
-  gpu=$(cat "$dev/gpu_busy_percent" 2>/dev/null || echo 0)
+  card=$(basename "$(dirname "$dev")")
+  case "$gpu_choice" in
+  auto) ;;
+  "$card") ;;
+  *) continue ;;
+  esac
+  device_asleep "$dev" && continue
   mu=$(cat "$dev/mem_info_vram_used" 2>/dev/null || echo 0)
   mt=$(cat "$dev/mem_info_vram_total" 2>/dev/null || echo 0)
+  [ "$mt" -gt "$best_vram_total" ] || continue
+  best_vram_total=$mt
+  gpu_available=1
+  gpu=$(cat "$dev/gpu_busy_percent" 2>/dev/null || echo 0)
+  gpu_temp=0
+  gpu_power=0
   for hw in "$dev"/hwmon/hwmon*; do
     [ -d "$hw" ] || continue
     if [ -r "$hw/temp1_input" ]; then
@@ -99,21 +117,38 @@ for dev in /sys/class/drm/card?/device; do
   vram=$(awk -v u="$mu" -v t="$mt" 'BEGIN { if (t > 0) printf "%.1f", u * 100 / t; else print 0 }')
   vram_used=$(awk -v u="$mu" 'BEGIN { printf "%.1f", u / 1073741824 }')
   vram_total=$(awk -v t="$mt" 'BEGIN { printf "%.1f", t / 1073741824 }')
-  break
 done
 
-if [ "$gpu_available" -eq 0 ] && command -v nvidia-smi >/dev/null 2>&1; then
+nvidia_present=0
+if [ "$gpu_choice" = "auto" ] || [ "$gpu_choice" = "nvidia" ]; then
+  for dev in /sys/bus/pci/devices/*; do
+    [ "$(cat "$dev/vendor" 2>/dev/null)" = "0x10de" ] || continue
+    case "$(cat "$dev/class" 2>/dev/null)" in
+    0x03*) ;;
+    *) continue ;;
+    esac
+    device_asleep "$dev" && continue
+    nvidia_present=1
+    break
+  done
+fi
+
+if [ "$nvidia_present" -eq 1 ] && command -v nvidia-smi >/dev/null 2>&1; then
   nv=$(nvidia-smi --query-gpu=utilization.gpu,temperature.gpu,memory.used,memory.total,power.draw --format=csv,noheader,nounits 2>/dev/null) || nv=""
   nv=${nv%%$'\n'*}
   if [[ "$nv" =~ ^[[:space:]]*[0-9]+, ]]; then
     IFS=',' read -r g t mu mt pw <<<"$nv"
-    gpu_available=1
-    gpu=$(awk -v v="$g" 'BEGIN { printf "%d", v }')
-    gpu_temp=$(awk -v v="$t" 'BEGIN { printf "%d", v }')
-    gpu_power=$(awk -v v="$pw" 'BEGIN { printf "%.1f", v }')
-    vram=$(awk -v u="$mu" -v t="$mt" 'BEGIN { if (t > 0) printf "%.1f", u * 100 / t; else print 0 }')
-    vram_used=$(awk -v u="$mu" 'BEGIN { printf "%.1f", u / 1024 }')
-    vram_total=$(awk -v t="$mt" 'BEGIN { printf "%.1f", t / 1024 }')
+    nv_total=$(awk -v t="$mt" 'BEGIN { printf "%d", t * 1048576 }')
+    if [ "$nv_total" -gt "$best_vram_total" ]; then
+      best_vram_total=$nv_total
+      gpu_available=1
+      gpu=$(awk -v v="$g" 'BEGIN { printf "%d", v }')
+      gpu_temp=$(awk -v v="$t" 'BEGIN { printf "%d", v }')
+      gpu_power=$(awk -v v="$pw" 'BEGIN { printf "%.1f", v }')
+      vram=$(awk -v u="$mu" -v t="$mt" 'BEGIN { if (t > 0) printf "%.1f", u * 100 / t; else print 0 }')
+      vram_used=$(awk -v u="$mu" 'BEGIN { printf "%.1f", u / 1024 }')
+      vram_total=$(awk -v t="$mt" 'BEGIN { printf "%.1f", t / 1024 }')
+    fi
   fi
 fi
 
