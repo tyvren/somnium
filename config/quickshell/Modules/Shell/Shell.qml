@@ -841,7 +841,7 @@ Scope {
                                 model: [
                                     { glyph: "󰹑", label: "Select", command: ["flameshot", "gui"] },
                                     { glyph: "󰹑", label: "Fullscreen", command: ["flameshot", "full", "--clipboard"] },
-                                    { glyph: "", label: "Record", command: ["obs", "--startrecording"] }
+                                    { glyph: "󰻂", label: "Record", command: ["obs", "--startrecording"] }
                                 ]
 
                                 delegate: StyledRect {
