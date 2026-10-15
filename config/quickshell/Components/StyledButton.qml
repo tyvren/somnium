@@ -73,6 +73,7 @@ Item {
             id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
             onClicked: root.clicked()
             onEntered: root.entered()
             onExited: root.exited()
