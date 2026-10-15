@@ -628,9 +628,25 @@ Scope {
                                 }
                             }
                         }
+                    }
 
-                        DividerLine {
-                            width: parent.width
+                    Column {
+                        id: leftSidebarSystem
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 100
+                        anchors.left: parent.left
+                        anchors.leftMargin: 30
+                        width: Math.max(0, leftSidebar.width - 62)
+                        spacing: 14
+                        opacity: frameWindow.leftSidebarOpen ? 1 : 0
+                        visible: opacity > 0
+                        enabled: frameWindow.leftSidebarOpen
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 250
+                                easing.type: Easing.OutCubic
+                            }
                         }
 
                         StyledText {
@@ -639,80 +655,102 @@ Scope {
                         }
 
                         Rectangle {
-                            width: leftSidebarTools.width
-                            height: 116
+                            width: leftSidebarSystem.width
+                            height: systemStatsColumn.implicitHeight + 20
                             radius: 10
                             color: "transparent"
                             border.width: Config.data.borderSize
                             border.color: Theme.colAccent
 
                             Column {
+                                id: systemStatsColumn
                                 anchors.fill: parent
                                 anchors.margins: 10
                                 spacing: 8
 
-                                Row {
-                                    width: parent.width
-                                    spacing: 5
+                                Repeater {
+                                    model: [
+                                        {
+                                            show: true,
+                                            label: "CPU",
+                                            value: Math.round(SysMonitor.cpuUsage) + "%",
+                                            fraction: SysMonitor.cpuUsage / 100
+                                        },
+                                        {
+                                            show: true,
+                                            label: "RAM",
+                                            value: SysMonitor.ramUsedGb.toFixed(1) + " / " + SysMonitor.ramTotalGb.toFixed(1) + " GB",
+                                            fraction: SysMonitor.ramUsage
+                                        },
+                                        {
+                                            show: SysMonitor.gpuAvailable,
+                                            label: "GPU",
+                                            value: Math.round(SysMonitor.gpuUsage * 100) + "%",
+                                            fraction: SysMonitor.gpuUsage
+                                        },
+                                        {
+                                            show: SysMonitor.gpuAvailable,
+                                            label: "VRAM",
+                                            value: SysMonitor.vramUsedGb.toFixed(1) + " / " + SysMonitor.vramTotalGb.toFixed(1) + " GB",
+                                            fraction: SysMonitor.vramUsage
+                                        },
+                                        {
+                                            show: true,
+                                            label: "Disk",
+                                            value: SysMonitor.diskUsedGb.toFixed(0) + " / " + SysMonitor.diskTotalGb.toFixed(0) + " GB",
+                                            fraction: SysMonitor.diskUsage
+                                        }
+                                    ]
 
-                                    Text {
-                                        text: "CPU"
-                                        color: Theme.colText
-                                        font.pixelSize: 11
-                                    }
+                                    delegate: Column {
+                                        width: systemStatsColumn.width
+                                        spacing: 4
+                                        visible: modelData.show
 
-                                    Text {
-                                        text: Math.round(SysMonitor.cpuUsage) + "%"
-                                        color: Theme.colAccent
-                                        font.pixelSize: 11
+                                        Row {
+                                            width: parent.width
+                                            spacing: 5
+
+                                            Text {
+                                                text: modelData.label
+                                                color: Theme.colText
+                                                font.pixelSize: 11
+                                            }
+
+                                            Text {
+                                                text: modelData.value
+                                                color: Theme.colAccent
+                                                font.pixelSize: 11
+                                            }
+                                        }
+
+                                        Rectangle {
+                                            width: parent.width
+                                            height: 5
+                                            radius: 3
+                                            color: Theme.colAccent
+                                            opacity: 0.2
+
+                                            Rectangle {
+                                                width: parent.width * Math.max(0, Math.min(1, modelData.fraction))
+                                                height: parent.height
+                                                radius: parent.radius
+                                                color: Theme.colAccent
+                                            }
+                                        }
                                     }
                                 }
 
-                                Rectangle {
-                                    width: parent.width
-                                    height: 5
-                                    radius: 3
-                                    color: Theme.colMuted
-                                    opacity: 0.5
-
-                                    Rectangle {
-                                        width: parent.width * Math.max(0, Math.min(100, SysMonitor.cpuUsage)) / 100
-                                        height: parent.height
-                                        radius: parent.radius
-                                        color: Theme.colAccent
-                                    }
+                                Text {
+                                    text: "CPU " + Math.round(SysMonitor.cpuTemp) + "°C" + (SysMonitor.gpuAvailable ? "   GPU " + Math.round(SysMonitor.gpuTemp) + "°C" : "")
+                                    color: Theme.colText
+                                    font.pixelSize: 11
                                 }
 
-                                Row {
-                                    width: parent.width
-                                    spacing: 5
-
-                                    Text {
-                                        text: "RAM"
-                                        color: Theme.colText
-                                        font.pixelSize: 11
-                                    }
-
-                                    Text {
-                                        text: Math.round(SysMonitor.ramUsage * 100) + "%"
-                                        color: Theme.colAccent
-                                        font.pixelSize: 11
-                                    }
-                                }
-
-                                Rectangle {
-                                    width: parent.width
-                                    height: 5
-                                    radius: 3
-                                    color: Theme.colAccent
-                                    opacity: 0.2
-
-                                    Rectangle {
-                                        width: parent.width * Math.max(0, Math.min(1, SysMonitor.ramUsage))
-                                        height: parent.height
-                                        radius: parent.radius
-                                        color: Theme.colAccent
-                                    }
+                                Text {
+                                    text: "Uptime " + SysMonitor.uptimeText
+                                    color: Theme.colText
+                                    font.pixelSize: 11
                                 }
                             }
                         }
@@ -803,11 +841,11 @@ Scope {
                                 model: [
                                     { glyph: "󰹑", label: "Select", command: ["flameshot", "gui"] },
                                     { glyph: "󰹑", label: "Fullscreen", command: ["flameshot", "full", "--clipboard"] },
-                                    { glyph: "", label: "Record", command: ["obs", "--startrecording"] }
+                                    { glyph: "", label: "Record", command: ["obs", "--startrecording"] }
                                 ]
 
                                 delegate: StyledRect {
-                                    width: 55 
+                                    width: 55
                                     height: 55
 
                                     Column {
@@ -833,7 +871,7 @@ Scope {
                                         anchors.fill: parent
                                         hoverEnabled: true
                                         cursorShape: Qt.PointingHandCursor
-                                        onClicked: { 
+                                        onClicked: {
                                             frameWindow.rightSidebarOpen = false;
                                             Quickshell.execDetached(modelData.command)
                                         }
