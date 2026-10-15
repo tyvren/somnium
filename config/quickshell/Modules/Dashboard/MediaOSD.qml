@@ -89,7 +89,10 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: States.dashboardOpen = true
+                onClicked: {
+                    States.currentView = "home" 
+                    States.dashboardOpen = true
+                }
             }
         }
 
