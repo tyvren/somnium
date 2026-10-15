@@ -11,10 +11,10 @@ import qs.Themes
 
 Item {
     id: root
-    anchors.fill: parent 
+    anchors.fill: parent
 
-    property int btnTextSize: 20
-    property int artistTextSize: 12
+    property int btnTextSize: 18
+    property int artistTextSize: 11
     property int titleTextSize: 14
     property int albumWidth: 100
     property int albumHeight: 100
@@ -45,9 +45,9 @@ Item {
 
     ClippingRectangle {
         id: bgImageContainer
-        anchors.fill: parent 
+        anchors.fill: parent
         opacity: 0.3
-        radius: Config.data.rounding
+        radius: 10
         color: "transparent"
 
         Image {
@@ -74,24 +74,39 @@ Item {
         }
     }
 
+    Rectangle {
+        id: cardOutline
+        anchors.fill: parent
+        radius: Config.data.rounding
+        color: "transparent"
+        border.width: Config.data.borderSize
+        border.color: Theme.colAccent
+    }
+
     RowLayout {
         id: rootRow
         anchors.fill: parent
+        anchors.margins: 12
+        spacing: 24
+
+        Item {
+            Layout.fillWidth: true
+        }
 
         ColumnLayout {
             id: leftColumn
-            Layout.alignment: Qt.AlignHCenter
+            Layout.alignment: Qt.AlignVCenter
             spacing: 10
 
             Item {
                 id: albumArt
                 Layout.alignment: Qt.AlignHCenter
-                width: root.albumWidth
-                height: root.albumHeight
+                Layout.preferredWidth: root.albumWidth
+                Layout.preferredHeight: root.albumHeight
 
                 ClippingRectangle {
                     anchors.fill: parent
-                    radius: 4
+                    radius: 10
                     color: "transparent"
 
                     Image {
@@ -113,7 +128,7 @@ Item {
             StyledText {
                 id: artistText
                 Layout.alignment: Qt.AlignHCenter
-                color: Theme.colAccent
+                Layout.maximumWidth: root.albumWidth + 40
                 size: root.artistTextSize
                 text: Players.active ? Players.artist(Players.active) : "No media playing"
                 elide: Text.ElideRight
@@ -122,8 +137,8 @@ Item {
 
         ColumnLayout {
             id: rightColumn
-            Layout.alignment: Qt.AlignHCenter
-            spacing: 33
+            Layout.alignment: Qt.AlignVCenter
+            spacing: 16
 
             StyledText {
                 id: titleText
@@ -138,52 +153,94 @@ Item {
             RowLayout {
                 id: playerControls
                 Layout.alignment: Qt.AlignHCenter
-                spacing: 20
+                spacing: 12
 
-                StyledButton {
-                    id: prevText
+                Rectangle {
+                    id: prevButton
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 20
-                    Layout.preferredHeight: 20
-                    color: "transparent"
-                    borderColor: "transparent" 
-                    textSize: root.btnTextSize
-                    text: "󰒮"
-                    onClicked: {
-                        if (Players.active) {
-                            Players.active.previous()
+                    Layout.preferredWidth: 34
+                    Layout.preferredHeight: 34
+                    radius: Config.data.rounding
+                    color: prevMouse.containsMouse ? Qt.alpha(Theme.colAccent, 0.2) : "transparent"
+                    border.width: Config.data.borderSize
+                    border.color: Theme.colAccent
+
+                    StyledText {
+                        anchors.centerIn: parent
+                        color: Theme.colAccent
+                        size: root.btnTextSize
+                        text: "󰒮"
+                    }
+
+                    MouseArea {
+                        id: prevMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            if (Players.active) {
+                                Players.active.previous()
+                            }
                         }
                     }
                 }
 
-                StyledButton {
-                    id: playText
+                Rectangle {
+                    id: playButton
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 20
-                    Layout.preferredHeight: 20
-                    color: "transparent"
-                    borderColor: "transparent" 
-                    textSize: root.btnTextSize
-                    text: Players.isPlaying ? "" : ""
-                    onClicked: {
-                        if (Players.active) {
-                            Players.active.togglePlaying()
+                    Layout.preferredWidth: 40
+                    Layout.preferredHeight: 40
+                    radius: Config.data.rounding
+                    color: playMouse.containsMouse ? Qt.alpha(Theme.colAccent, 0.2) : "transparent"
+                    border.width: Config.data.borderSize
+                    border.color: Theme.colAccent
+
+                    StyledText {
+                        anchors.centerIn: parent
+                        color: Theme.colAccent
+                        size: root.btnTextSize
+                        text: Players.isPlaying ? "󰏤" : "󰐊"
+                    }
+
+                    MouseArea {
+                        id: playMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            if (Players.active) {
+                                Players.active.togglePlaying()
+                            }
                         }
                     }
                 }
 
-                StyledButton {
-                    id: nextText
+                Rectangle {
+                    id: nextButton
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 20
-                    Layout.preferredHeight: 20
-                    color: "transparent"
-                    borderColor: "transparent" 
-                    textSize: root.btnTextSize
-                    text: "󰒭"
-                    onClicked: {
-                        if (Players.active) {
-                            Players.active.next()
+                    Layout.preferredWidth: 34
+                    Layout.preferredHeight: 34
+                    radius: Config.data.rounding
+                    color: nextMouse.containsMouse ? Qt.alpha(Theme.colAccent, 0.2) : "transparent"
+                    border.width: Config.data.borderSize
+                    border.color: Theme.colAccent
+
+                    StyledText {
+                        anchors.centerIn: parent
+                        color: Theme.colAccent
+                        size: root.btnTextSize
+                        text: "󰒭"
+                    }
+
+                    MouseArea {
+                        id: nextMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            if (Players.active) {
+                                Players.active.next()
+                            }
                         }
                     }
                 }
@@ -201,9 +258,8 @@ Item {
                     id: currentTimeText
                     Layout.alignment: Qt.AlignVCenter
                     text: Players.formatTime(trackProgressContainer.positionSeconds)
-                    size: 10
+                    size: 11
                     color: Theme.colAccent
-                    opacity: 0.8
                 }
 
                 Item {
@@ -215,6 +271,14 @@ Item {
                     readonly property real length: Math.max(1, trackProgressContainer.lengthSeconds)
                     readonly property real pos: Math.min(length, Math.max(0, trackProgressContainer.positionSeconds))
                     readonly property real progressRatio: pos / length
+
+                    Rectangle {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width
+                        height: 3
+                        radius: 2
+                        color: Qt.alpha(Theme.colAccent, 0.2)
+                    }
 
                     Item {
                         id: played
@@ -259,11 +323,14 @@ Item {
                     id: totalTimeText
                     Layout.alignment: Qt.AlignVCenter
                     text: Players.formatTime(trackProgressContainer.lengthSeconds)
-                    size: 10
+                    size: 11
                     color: Theme.colAccent
-                    opacity: 0.8
                 }
             }
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
     }
 }

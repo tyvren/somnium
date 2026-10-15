@@ -101,7 +101,7 @@ Scope {
                 readonly property int osdFadeDuration: 350
 
                 readonly property int dashboardClosedWidth: 1000
-                readonly property int dashboardHomeWidth: 600
+                readonly property int dashboardHomeWidth: 700
                 readonly property int dashboardAudioWidth: 600
                 readonly property int dashboardBluetoothWidth: 600
                 readonly property int dashboardLauncherWidth: 600

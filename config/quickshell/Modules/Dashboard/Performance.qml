@@ -9,11 +9,52 @@ import qs.Services
 RowLayout {
     id: performanceRoot
     anchors.fill: parent
-    spacing: 10
+    spacing: 20
+
+    function statData(key: string): var {
+        switch (key) {
+            case "cpu":
+                return {
+                    show: true,
+                    label: "CPU",
+                    value: Math.round(SysMonitor.cpuUsage) + "%",
+                    fraction: SysMonitor.cpuUsage / 100
+                }
+            case "ram":
+                return {
+                    show: true,
+                    label: "RAM",
+                    value: SysMonitor.ramUsedGb.toFixed(1) + " / " + SysMonitor.ramTotalGb.toFixed(1) + " GB",
+                    fraction: SysMonitor.ramUsage
+                }
+            case "gpu":
+                return {
+                    show: SysMonitor.gpuAvailable,
+                    label: "GPU",
+                    value: Math.round(SysMonitor.gpuUsage * 100) + "%",
+                    fraction: SysMonitor.gpuUsage
+                }
+            case "vram":
+                return {
+                    show: SysMonitor.gpuAvailable,
+                    label: "VRAM",
+                    value: SysMonitor.vramUsedGb.toFixed(1) + " / " + SysMonitor.vramTotalGb.toFixed(1) + " GB",
+                    fraction: SysMonitor.vramUsage
+                }
+            case "disk":
+                return {
+                    show: true,
+                    label: "Disk",
+                    value: SysMonitor.diskUsedGb.toFixed(0) + " / " + SysMonitor.diskTotalGb.toFixed(0) + " GB",
+                    fraction: SysMonitor.diskUsage
+                }
+        }
+        return { show: false, label: "", value: "", fraction: 0 }
+    }
 
     ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
-        Layout.fillWidth: true
+        Layout.preferredWidth: 150
         spacing: 10
 
         StyledText {
@@ -35,9 +76,9 @@ RowLayout {
 
             onClicked: {
                 PowerProfiles.setPowerSaver();
-                powerSaveNotification.startDetached(); 
+                powerSaveNotification.startDetached();
             }
-        } 
+        }
 
         StyledButtonLeftText {
             id: balanced
@@ -52,7 +93,7 @@ RowLayout {
 
             onClicked: {
                 PowerProfiles.setBalanced();
-                balancedNotification.startDetached(); 
+                balancedNotification.startDetached();
             }
         }
 
@@ -69,110 +110,103 @@ RowLayout {
 
             onClicked: {
                 PowerProfiles.setPerformance();
-                performanceNotification.startDetached(); 
+                performanceNotification.startDetached();
             }
         }
     }
 
-
-    ColumnLayout {
-        id: statsRow
-        Layout.alignment: Qt.AlignHCenter
+    Rectangle {
+        id: statsCard
+        Layout.alignment: Qt.AlignVCenter
         Layout.fillWidth: true
-        spacing: 10
+        Layout.preferredHeight: statsContent.implicitHeight + 20
+        radius: 10
+        color: "transparent"
+        border.width: Config.data.borderSize
+        border.color: Theme.colAccent
 
-        Rectangle {
-            id: cpuBadge
-            Layout.alignment: Qt.AlignHCenter
-            width: 150
-            height: 80
-            radius: Config.data.rounding
-            color: Theme.colMuted
+        ColumnLayout {
+            id: statsContent
+            anchors.fill: parent
+            anchors.margins: 10
+            spacing: 8
 
-            Row {
-                id: cpuRow
-                spacing: 5
-                anchors.centerIn: parent
+            GridLayout {
+                id: statsGrid
+                Layout.fillWidth: true
+                columns: 3
+                columnSpacing: 20
+                rowSpacing: 8
 
-                StyledText {
-                    text: ""
-                    color: Theme.colAccent
-                    size: 16
-                    Layout.alignment: Qt.AlignHCenter 
-                }
+                Repeater {
+                    model: ["cpu", "ram", "gpu", "vram", "disk"]
 
-                StyledText {
-                    text: Math.round(SysMonitor.cpuUsage) + "%"
-                    color: Theme.colAccent
-                    bold: true
-                    size: 16
-                    Layout.alignment: Qt.AlignHCenter 
-                }
-            }
+                    delegate: Column {
+                        id: statRow
+                        required property var modelData
+                        readonly property var stat: performanceRoot.statData(modelData)
 
-            Rectangle {
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width - 6
-                height: 10
-                radius: 1
-                color: Theme.colMuted
+                        visible: stat.show
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 150
+                        spacing: 4
 
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: parent.width * Math.min(Math.max(SysMonitor.cpuUsage / 100, 0), 1)
-                    color: Theme.colAccent
-                    radius: 1
-                }
-            }
-        }
+                        Row {
+                            width: parent.width
+                            spacing: 5
 
-        Rectangle {
-            id: ramBadge
-            Layout.alignment: Qt.AlignHCenter
-            width: 150
-            height: 80
-            radius: Config.data.rounding
-            color: Theme.colMuted
+                            Text {
+                                text: statRow.stat.label
+                                color: Theme.colText
+                                font.pixelSize: 11
+                            }
 
-            Row {
-                id: ramRow
-                spacing: 5
-                anchors.centerIn: parent
+                            Text {
+                                text: statRow.stat.value
+                                color: Theme.colAccent
+                                font.pixelSize: 11
+                            }
+                        }
 
-                StyledText {
-                    text: ""
-                    color: Theme.colAccent
-                    size: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                        Rectangle {
+                            width: parent.width
+                            height: 5
+                            radius: 3
+                            color: Theme.colAccent
+                            opacity: 0.2
 
-                StyledText {
-                    text: Math.round(SysMonitor.ramUsage * 100) + "%"
-                    color: Theme.colAccent
-                    bold: true
-                    size: 16
-                    anchors.verticalCenter: parent.verticalCenter
+                            Rectangle {
+                                width: parent.width * Math.max(0, Math.min(1, statRow.stat.fraction))
+                                height: parent.height
+                                radius: parent.radius
+                                color: Theme.colAccent
+                            }
+                        }
+                    }
                 }
             }
 
-            Rectangle {
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width - 6
-                height: 10
-                radius: 1
-                color: Theme.colMuted
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 20
 
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: parent.width * Math.min(Math.max(SysMonitor.ramUsage, 0), 1)
-                    color: Theme.colAccent
-                    radius: 1
+                Text {
+                    text: "Temp  CPU " + Math.round(SysMonitor.cpuTemp) + "°C" + (SysMonitor.gpuAvailable ? "   GPU " + Math.round(SysMonitor.gpuTemp) + "°C" : "")
+                    color: Theme.colText
+                    font.pixelSize: 11
+                }
+
+                Text {
+                    visible: SysMonitor.cpuPowerAvailable || SysMonitor.gpuPower > 0
+                    text: "Power  " + (SysMonitor.cpuPowerAvailable ? "CPU " + SysMonitor.cpuPower.toFixed(1) + " W" : "") + (SysMonitor.gpuPower > 0 ? "   GPU " + SysMonitor.gpuPower.toFixed(1) + " W" : "")
+                    color: Theme.colText
+                    font.pixelSize: 11
+                }
+
+                Text {
+                    text: "Uptime " + SysMonitor.uptimeText
+                    color: Theme.colText
+                    font.pixelSize: 11
                 }
             }
         }
