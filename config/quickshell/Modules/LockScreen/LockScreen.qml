@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
@@ -122,13 +121,9 @@ WlSessionLock {
                     anchors.margins: -80
                     source: wallpaper
                     blurEnabled: true
-                    blur: 0.8
+                    blur: 0.5
                     blurMax: 64
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "#55000000"
+                    brightness: -0.1
                 }
             }
 
@@ -374,7 +369,7 @@ WlSessionLock {
             }
 
             ColumnLayout {
-                id: clockBlock
+                id: clock
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.leftMargin: Math.max(32, parent.width * 0.055)
@@ -454,7 +449,7 @@ WlSessionLock {
                     ShapePath {
                         strokeWidth: Math.max(1, Config.data.borderSize || 1) * (1 + scene.buildFlash * 0.35)
                         strokeColor: Qt.tint(Theme.colAccent, Qt.rgba(1, 1, 1, scene.buildFlash * 0.65))
-                        fillColor: "transparent"
+                        fillColor: Theme.colBg
                         capStyle: ShapePath.RoundCap
                         joinStyle: ShapePath.RoundJoin
                         strokeStyle: ShapePath.DashLine
@@ -511,8 +506,8 @@ WlSessionLock {
                         Layout.preferredWidth: 112
                         Layout.preferredHeight: 112
                         Layout.alignment: Qt.AlignHCenter
-                        radius: Config.data.rounding + 4
-                        border.width: 2
+                        radius: Config.data.rounding
+                        border.width: Config.data.borderSize
                         border.color: Theme.colAccent
                         scale: scene.introComplete ? 1 : 0.7
                         opacity: scene.introComplete ? 1 : 0
@@ -556,7 +551,8 @@ WlSessionLock {
 
                     StyledInput {
                         id: passwordBox
-                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredWidth: parent.width * 0.75
                         Layout.preferredHeight: 42
                         echoMode: TextInput.Password
                         placeholderText: "Enter password"
@@ -574,12 +570,12 @@ WlSessionLock {
                     }
 
                     RowLayout {
-                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
                         spacing: 10
 
                         StyledButton {
                             id: unlockButton
-                            Layout.fillWidth: true
+                            Layout.preferredWidth: parent.width * 0.8
                             Layout.preferredHeight: 42
                             focusPolicy: Qt.NoFocus
                             icon: "󰌾"
@@ -664,14 +660,6 @@ WlSessionLock {
                         easing.type: Easing.OutCubic
                     }
                 }
-
-                Rectangle {
-                    width: 5
-                    height: 5
-                    radius: 3
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: Theme.colAccent
-                }
             }
 
             SequentialAnimation {
@@ -687,7 +675,7 @@ WlSessionLock {
                         property: "frameDrawProgress"
                         from: 0
                         to: 1
-                        duration: 520
+                        duration: 500
                         easing.type: Easing.OutCubic
                     }
 
@@ -696,7 +684,7 @@ WlSessionLock {
                         property: "panelDrawProgress"
                         from: 0
                         to: 1
-                        duration: 460
+                        duration: 500
                         easing.type: Easing.OutCubic
                     }
 
@@ -705,7 +693,7 @@ WlSessionLock {
                         property: "framePulse"
                         from: 0
                         to: 12
-                        duration: 520
+                        duration: 500
                         easing.type: Easing.OutCubic
                     }
 
