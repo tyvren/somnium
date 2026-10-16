@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/5d79ca24-6690-47e2-9392-d9ff535c8bb3" alt="somnium desktop preview" width="100%">
+  <img src="https://github.com/user-attachments/assets/5bdf5510-abae-496d-8ca0-b40e234e7c23"/>
 </p>
 
 <p align="center">
@@ -54,6 +54,7 @@ somnium/
 ├── 📂 core/                   # Sub-installer modules and system provisioners
 │   └── packages.sh            # Complete list of core system packages
 │
+├── 📂 greeter/                # Custom quickshell greeter to manage multiple users or desktops
 ├── 📂 modules/                # Custom shell scripts and IPC utilities for Quickshell
 └── 📂 themes/                 # Swappable color profiles and assets
 
