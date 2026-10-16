@@ -23,7 +23,6 @@ ScrollView {
         spacing: 15
 
         property string barLayout: Config.data.barLayout
-        property bool sysMonitor: Config.data.sysMonitor === "true"
         property string theme: Config.data.theme
 
         function applyHypr() {

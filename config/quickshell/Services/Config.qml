@@ -39,7 +39,7 @@ Singleton {
 
             property int gapsIn: 4
             property int gapsOut: 10
-            property real borderSize: 0.8
+            property real borderSize: 1.0
             property int windowBorderSize: 1
             property int rounding: 6
             property real activeOpacity: 1.0
@@ -52,7 +52,6 @@ Singleton {
             property int blurPasses: 3
             property bool disableHyprlandLogo: true
             property int forceDefaultWallpaper: 0
-            property string sysMonitor: "false"
 
             property string mainMod: ""
             property string terminal: ""
