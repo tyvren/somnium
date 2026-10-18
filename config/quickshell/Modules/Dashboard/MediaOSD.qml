@@ -179,6 +179,7 @@ Item {
         StyledText {
             id: artistText
             Layout.alignment: Qt.AlignVCenter
+            Layout.preferredWidth: 60
             color: Theme.colAccent
             size: root.artistTextSize
             text: Players.active ? (Players.active.trackArtist) : ""
@@ -187,13 +188,13 @@ Item {
 
         StyledText {
             id: titleText
-            Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
+            Layout.preferredWidth: 160
             color: Theme.colAccent
             size: root.titleTextSize
             bold: true
             text: Players.active ? (Players.active.trackTitle) : ""
-            elide: Text.ElideRight
+            elide: Text.ElideRight 
         }
     }
 }
