@@ -87,10 +87,11 @@ FloatingWindow {
                                 {icon: "", text: "Bluetooth"},
                                 {icon: "󰍹", text: "Displays"},
                                 {icon: "", text: "Keybinds"},
-                                {icon: "󰖩 ", text: "Network"},
-                                {icon: "󰒃 ", text: "Security"},
-                                {icon: "󰚰 ", text: "Updates"},
-                                {icon: "󰸉 ", text: "Wallpaper"}
+                                {icon: "󰖩", text: "Network"},
+                                {icon: "󰒃", text: "Security"},
+                                {icon: "", text: "Users"},
+                                {icon: "󰚰", text: "Updates"},
+                                {icon: "󰸉", text: "Wallpaper"}
                             ]
 
                             StyledButton {
@@ -168,6 +169,7 @@ FloatingWindow {
                         Keybinds {}  
                         NetworkSettings {}
                         Security {}
+                        Users {}
                         UpdateSettings {}
                         WallpaperSettings {
                             active: settingsMenu.visible && settingsMenu.activeIndex === 10
