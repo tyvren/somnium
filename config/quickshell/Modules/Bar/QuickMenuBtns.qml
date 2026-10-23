@@ -15,6 +15,7 @@ RowLayout {
           Layout.preferredHeight: 10
           color: "transparent"
           onClicked: {
+              States.mainMenuOpen = false
               settingsProcess.startDetached()
           }
     }
@@ -25,6 +26,7 @@ RowLayout {
           Layout.preferredHeight: 10
           color: "transparent"
           onClicked: {
+              States.mainMenuOpen = false
               lockProcess.startDetached()
           }
     }
@@ -35,6 +37,7 @@ RowLayout {
           Layout.preferredHeight: 10
           color: "transparent"
           onClicked: {
+              States.mainMenuOpen = false
               logoutProcess.startDetached()
           }
     }
@@ -45,6 +48,7 @@ RowLayout {
         Layout.preferredHeight: 10
         color: "transparent"
         onClicked: {
+            States.mainMenuOpen = false
             restartProcess.startDetached()
         }
     }
@@ -54,6 +58,7 @@ RowLayout {
         Layout.preferredWidth: 10
         Layout.preferredHeight: 10
         onClicked: {
+            States.mainMenuOpen = false
             shutdownProcess.startDetached()
         }
     }
